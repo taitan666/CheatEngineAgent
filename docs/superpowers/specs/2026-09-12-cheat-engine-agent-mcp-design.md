@@ -1,6 +1,6 @@
 # Cheat Engine Agent MCP 接入设计
 
-> 状态更新（2026-09-13）：本设计继续作为 MCP 适配器规范，但不再定义产品中心或总体实施顺序；这些由 `2026-09-13-game-reverse-agent-rebaseline.md` 管理。
+> 状态更新（2026-09-13）：本设计继续作为 MCP 适配器规范，但不再定义产品中心或总体实施顺序；这些由 `2026-09-13-game-companion-rebaseline.md` 管理。
 
 日期：2026-09-12  
 状态：已批准的从属 MCP 适配器设计  
