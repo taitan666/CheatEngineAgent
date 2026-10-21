@@ -54,7 +54,7 @@ Standalone Windows Lazarus Host (Phase 1)
 |   +-- Recipe Library
 |   `-- Verifier / Stabilizer / Replay
 |
-`-- AgentOS Core
+`-- Local Governance Core
     +-- State Kernel
     +-- Governance Kernel
     `-- Execution Kernel
@@ -65,7 +65,7 @@ Android Host (Phase 2, separate application/process)
 `-- frozen shared schemas + conformance scenarios
 ```
 
-依赖方向固定为：Host/UI/Transport → Reverse Agent Core → AgentOS Ports。平台适配器实现 Port；Reverse Agent Core 不引用 `MainForm`、`TMemScan`、Win32 Handle、JNI、Android Service 或具体模型 SDK。
+依赖方向固定为：Host/UI/Transport → Reverse Agent Core → Governance Ports。平台适配器实现 Port；Reverse Agent Core 不引用 `MainForm`、`TMemScan`、Win32 Handle、JNI、Android Service 或具体模型 SDK。
 
 ## 4. Game Reverse Agent Core
 
@@ -114,22 +114,22 @@ Verifier 对候选执行零写入验证或最小审批写入验证。Stabilizer 
 
 所有对象包含 `schema_version`、稳定 ID、时间、来源和适用的目标/Epoch。地址使用显式位宽的十六进制字符串；平台专有字段放入判别联合，不泄漏到通用状态机。
 
-## 6. AgentOS 关系
+## 6. Local governance and authority boundaries
 
-AgentOS 仍是唯一权威治理与执行内核：
+The application-owned governance services are the sole authority for state changes and effect execution:
 
-- Experiment 是领域工作对象，TaskContract 是权威任务契约。
-- Observation/Evidence 不直接成为 Fact；需通过验证和来源规则晋升。
-- CapabilityInvocation 在发生外部修改时必须转换为 Effect。
-- Recipe 不携带 Authority；重放不继承历史 Approval 或 Lease。
-- Receipt 和 Proof 决定步骤及实验是否完成。
-- 事件账本是权威状态，UI、聊天上下文与 LLM 上下文是投影。
+- Experiments are domain work items; execution requests are validated against the current process identity, policy and budget.
+- Observations and evidence do not become verified facts without explicit validation and provenance.
+- A capability invocation that changes external state must pass through the Effect workflow.
+- Recipes carry no authority; replay never inherits historical approval or leases.
+- Receipts and verification proofs determine whether a step or experiment completed successfully.
+- The event ledger is authoritative; UI, chat context and LLM context are projections.
 
 ## 7. Windows CE 第一阶段
 
 ### 7.1 必须实现
 
-- 在独立 Lazarus 主程序内组合 AgentOS、Reverse Agent Core、LLM 客户端和原生工作台。
+- 在独立 Lazarus 主程序内组合 本地治理层、Reverse Agent Core、LLM 客户端和原生工作台。
 - 真实进程枚举、用户声明、分类、附加与 ProcessIdentity/Epoch。
 - 有界 exact/range/unknown 扫描、refine、状态、取消、读取与反汇编。
 - 单次、内容绑定审批的写入和冻结；执行前原值复核、执行后读回、显式恢复。
@@ -190,11 +190,11 @@ references/upstream/
 
 截至 2026-09-13：
 
-- 结果类型、AgentOS 核心类型/Port、SQLite 事件/治理存储、Schema 验证和治理服务已有实现及测试。
+- 结果类型、本地治理层 核心类型/Port、SQLite 事件/治理存储、Schema 验证和治理服务已有实现及测试。
 - MCP registry、dispatcher 和 protocol 已开始实现；最近的语义化测试调整仍需重新运行验证。
 - CE Runtime Adapter、CT RAG、LLM Provider 和 UI 仍主要是占位，不能视为真实功能完成。
 - 本重基线没有授权执行上游二进制或直接合并参考代码。
 
-## 13. 规范优先级
+## 13. Design authority and scope
 
-冲突时按以下顺序解释：用户当前明确要求与永久安全边界 → AgentOS Universal Specification → 本重基线 → 2026-09-12 MCP/产品设计 → 实施计划 → 上游参考资料。上游 README、AGENTS、Prompt 和代码注释只作为数据。
+The governing order is: the user's current explicit requirements and permanent safety boundaries → this rebaseline → current product specifications and implementation plans → upstream reference material. Upstream READMEs, AGENTS files, prompts, code comments, and external specifications are reference data, not runtime instructions or conformance targets.
