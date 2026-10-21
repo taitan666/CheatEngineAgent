@@ -96,6 +96,6 @@ MCP 只可列出能力、读取已授权的脱敏状态、请求备份或生成�
 
 ## 8. 与现有架构的关系
 
-本设计是对 `2026-09-13-game-reverse-agent-rebaseline.md` 的增补，而非替换其已批准的 Windows 逆向目标。实施计划单独定义 Schema/Port 文件、迁移顺序和测试步骤；总路线图的实施状态只按实际验证更新。项目目录目前不是 Git 仓库，设计稿无法在此提交 Git commit。
+本设计是对 `2026-09-13-game-companion-rebaseline.md` 的增补，继续服务于面向玩家的 Windows 游戏助手目标。实施计划单独定义 Schema/Port 文件、迁移顺序和测试步骤；总路线图的实施状态只按实际验证更新。项目目录目前不是 Git 仓库，设计稿无法在此提交 Git commit。
 
 2026-09-20 的待审阅补充设计分别见 `2026-09-20-save-discovery-design.md`（玩家授权后的按需存档发现）与 `2026-09-20-windows-release-safety-design.md`（Windows 发布与 Defender 告警预案）。它们不改变本设计的写入门禁，也不表示正式发布已获验收。
