@@ -30,13 +30,13 @@
 Windows 原生工作台 / MCP（查询与提议）
   -> Save Application Service（任务与用户可见投影）
       -> Save Domain（快照、字段、差异、版本、恢复语义）
-      -> AgentOS State / Governance / Execution
+      -> Local State / Governance / Execution Services
           -> Save File Port（受治理的实际文件效果出口）
       -> Format Registry（探测与精确版本选择）
           -> Read-only Inspector / Game-specific Codec
       -> Backup Store（内容寻址、保留与恢复材料）
 
-Save Domain 不依赖 Win32 句柄、Lazarus 控件、具体游戏、MCP 或模型 SDK。现有 AgentOS 内核保持权威状态；原始存档由玩家文件系统持有，备份为独立不可变 Artifact，解析字段、进度摘要和 RAG 索引只是带来源的派生视图。CT、内存与存档观察可在同一 `GameSession` 下并列展示，但不能因为值相似就自动断定它们是同一个事实。
+Save Domain 不依赖 Win32 句柄、Lazarus 控件、具体游戏、MCP 或模型 SDK。应用自身的状态与治理服务保持权威状态；原始存档由玩家文件系统持有，备份为独立不可变 Artifact，解析字段、进度摘要和 RAG 索引只是带来源的派生视图。CT、内存与存档观察可在同一 `GameSession` 下并列展示，但不能因为值相似就自动断定它们是同一个事实。
 
 MCP 只可列出能力、读取已授权的脱敏状态、请求备份或生成待审批编辑提议；不得远程批准、绕过本机确认或直接调用文件写口。LLM 只生成 `SaveEditProposal`，不传入任意文件路径/字节序列作为写命令。
 
@@ -80,7 +80,7 @@ MCP 只可列出能力、读取已授权的脱敏状态、请求备份或生成�
 - 编码成功但替换失败：保留原文件与备份，清理候选需有可核对记录。替换可能成功但回执缺失时，按目标和备份哈希对账，不重复写同一 Effect。
 - 读回失败、字段不一致或提交冲突：记录失败/unknown 与证据，禁止宣称成功；用户可选择独立恢复 Effect。日志、LLM 上下文和 MCP 输出不包含完整存档、秘密或不必要的绝对路径。
 
-这些约束映射 AgentOS Universal Specification v1.4-draft 的 AO-001/002/005/007/008/009/013/014/015/016/017/018/019。规范草案作为用户提供的设计资料；如 Schema 或现有实现冲突，记录差异并单独修订，不静默放宽治理。
+这些约束是本项目自身的安全与数据完整性要求；如 Schema 或现有实现冲突，应记录差异并单独修订，不得静默放宽治理。
 
 ## 7. 验收与交付顺序
 
