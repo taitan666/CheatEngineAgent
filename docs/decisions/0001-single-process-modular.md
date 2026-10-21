@@ -1,6 +1,6 @@
 # ADR 0001: Single-process modular architecture
 
-**Decision:** Compile AgentOS kernels and adapters into Cheat Engine while enforcing port boundaries.
+**Decision:** Keep the application's local governance services and adapters in one process while enforcing explicit port boundaries.
 
 **Reason:** The user requires native CE integration. Interfaces preserve testability and prevent Core from depending on CE globals.
 
