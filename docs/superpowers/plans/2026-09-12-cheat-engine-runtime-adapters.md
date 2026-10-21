@@ -4,7 +4,7 @@
 
 **Goal:** Connect the governed capability dispatcher to real Cheat Engine 7.5 process, scan, memory and UI approval facilities, first against a safe self-test process and then an explicitly authorized offline target.
 
-**Architecture:** CE-specific adapters live behind the existing process/memory/debug/script ports and never receive raw MCP objects. A thread-safe command queue marshals all global CE and LCL access to the correct owner thread; AgentOS validates exact process identity and Effect approval both before and after queueing.
+**Architecture:** CE-specific adapters live behind the existing process/memory/debug/script ports and never receive raw MCP objects. A thread-safe command queue marshals all global CE and LCL access to the correct owner thread; local governance services validates exact process identity and Effect approval both before and after queueing.
 
 **Tech Stack:** Free Pascal 3.2.2, Lazarus LCL, Cheat Engine 7.5 units (`ProcessHandlerUnit`, `memscan`, `symbolhandler`, `disassembler`, `autoassembler`, `LuaHandler`), Windows user-mode APIs.
 
@@ -12,7 +12,7 @@
 
 ## Global Constraints
 
-- Complete `2026-09-12-agentos-mcp-foundation.md` first.
+- Complete `2026-09-12-cheat-engine-agent-mcp-design.md` first.
 - Use user-mode CE facilities only; no DBK, kernel debugger, concealment or anti-cheat bypass.
 - No HTTP thread may access LCL controls or CE global state directly.
 - Every write must bind expected original bytes, local UI approval, exact ProcessIdentity and readback Proof.
@@ -120,7 +120,7 @@ Expected: queue test passes and the self-target emits valid JSON containing a no
 - Modify: `build/unit-manifest.txt`
 
 **Interfaces:**
-- Consumes: `ProcessHandlerUnit`, CE process enumeration and AgentOS Lease checks.
+- Consumes: `ProcessHandlerUnit`, CE process enumeration and local governance services Lease checks.
 - Produces: `TCEAProcessIdentityBuilder.BuildForPid`, `MatchesCurrent`; operational `ListProcesses`, `Attach`, `Detach`.
 
 - [ ] **Step 1: Write failing PID reuse and identity tests**
@@ -317,7 +317,7 @@ Assert(FakeWriter.WriteCount = 1);
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\tests\pascal\run-test-program.ps1 -Program .\tests\integration\test-governed-write.pas
-powershell -NoProfile -ExecutionPolicy Bypass -File .\tests\pascal\run-test-program.ps1 -Program .\tests\pascal\test_agentos_governance.pas
+powershell -NoProfile -ExecutionPolicy Bypass -File .\tests\pascal\run-test-program.ps1 -Program .\tests\pascal\test_governance_services.pas
 ```
 
 Expected: approved self-target write passes with Proof; all denial and idempotency tests pass.
@@ -384,7 +384,7 @@ Store.SaveApproval(Decision);
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\tests\pascal\run-test-program.ps1 -Program .\tests\pascal\test_ui_approval_binding.pas
-powershell -NoProfile -ExecutionPolicy Bypass -File .\tests\pascal\run-test-program.ps1 -Program .\tests\pascal\test_agentos_governance.pas
+powershell -NoProfile -ExecutionPolicy Bypass -File .\tests\pascal\run-test-program.ps1 -Program .\tests\pascal\test_governance_services.pas
 ```
 
 Expected: binding test passes and no MCP method can create a local-origin approval.
@@ -444,7 +444,7 @@ begin
 Application.CreateForm(TMainForm, MainForm);
 AgentRegistration := RegisterCheatEngineAgent(MainForm);
 if AgentRegistration.Code <> rcOk then
-  OutputDebugString(PChar('AgentOS disabled: ' + AgentRegistration.MessageText));
+  OutputDebugString(PChar('Local governance services disabled: ' + AgentRegistration.MessageText));
 try
   Application.Run;
 finally
@@ -452,7 +452,7 @@ finally
 end;
 ```
 
-Add only the required `cheat-engine-agnet` unit paths to every active Lazarus build mode. Registration builds all concrete dependencies, installs the queue pump using `Application.QueueAsyncCall` or a short LCL timer, and keeps MCP disabled until the user enables it. Unregistration performs AgentOS emergency stop before CE globals are destroyed.
+Add only the required `cheat-engine-agnet` unit paths to every active Lazarus build mode. Registration builds all concrete dependencies, installs the queue pump using `Application.QueueAsyncCall` or a short LCL timer, and keeps MCP disabled until the user enables it. Unregistration performs local governance services emergency stop before CE globals are destroyed.
 
 - [ ] **Step 5: Build Cheat Engine and run the adapter acceptance harness**
 
