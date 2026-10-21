@@ -358,5 +358,5 @@ cheat-engine-agnet/
 
 1. **「验证性写入」作为唯一晋升通道**：字段物化后恒为 `faReadOnly`，而 Command Bus 只接受 `faVerifiedWritable`，形成死锁。解法是以临时 `faVerifiedWritable` 视图驱动一次写入 + 独立重读，一致才写回真实可写态，不一致则置 `faInvalid`。这既解开死锁，又保证「可写」永远建立在实证之上。
 2. **AI 永不直接产出可执行物**：AI 只能产出字段映射/UI Schema/扫描策略/修改建议，且一律进「待确认」态；写入只能走 Command Bus。
-3. **布局/事件/Profile 各自独立 SQLite**（`ui-layout.sqlite3` / `profiles.sqlite3` / `events.sqlite3` / `agentos.sqlite3`）：产品域数据与治理域数据分离，避免治理库被产品数据污染。
+3. **布局/事件/Profile 各自独立 SQLite**（`ui-layout.sqlite3` / `profiles.sqlite3` / `events.sqlite3` / `governance.sqlite3`）：产品域数据与治理域数据分离，避免治理库被产品数据污染。
 
