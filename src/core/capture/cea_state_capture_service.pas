@@ -5,7 +5,7 @@ unit cea_state_capture_service;
 interface
 
 uses
-  SysUtils, FPJSON, JSONParser, cea_results, cea_effect_backend_ports,
+  Classes, SysUtils, FPJSON, JSONParser, cea_results, cea_effect_backend_ports,
   cea_field_model;
 
 type
@@ -23,12 +23,14 @@ type
     FBackend: ICEAMemoryEffectBackend;
     FPid: Cardinal;
     FSequence: QWord;
-    FLastBytesHex: string;
+    FLastFieldIds: TStringList;
+    FLastFieldBytes: TStringList;
     function TryParseHexAddress(const AText: string;
       out AValue: QWord): Boolean;
   public
     constructor Create(const ABackend: ICEAMemoryEffectBackend;
       const APid: Cardinal);
+    destructor Destroy; override;
     // 读字段当前值（按 value_type 决定字节宽）
     function CaptureField(const AField: TCEAGameField;
       out AResult: TCEAFieldCaptureResult): TCEAResult;
@@ -54,7 +56,15 @@ begin
   FBackend := ABackend;
   FPid := APid;
   FSequence := 0;
-  FLastBytesHex := '';
+  FLastFieldIds := TStringList.Create;
+  FLastFieldBytes := TStringList.Create;
+end;
+
+destructor TCEAStateCaptureService.Destroy;
+begin
+  FreeAndNil(FLastFieldBytes);
+  FreeAndNil(FLastFieldIds);
+  inherited Destroy;
 end;
 
 function TCEAStateCaptureService.TryParseHexAddress(const AText: string;
@@ -67,7 +77,8 @@ end;
 
 procedure TCEAStateCaptureService.ResetBaseline;
 begin
-  FLastBytesHex := '';
+  FLastFieldIds.Clear;
+  FLastFieldBytes.Clear;
 end;
 
 function TCEAStateCaptureService.CaptureField(const AField: TCEAGameField;
@@ -78,6 +89,8 @@ var
   ReadResult: TCEAResult;
   Data: TJSONData;
   BytesHex: string;
+  BaselineIndex: Integer;
+  ChangedJson: string;
 begin
   FillChar(AResult, SizeOf(AResult), 0);
   if not TryParseHexAddress(AField.AddressHex, Address) then
@@ -101,11 +114,26 @@ begin
   AResult.BytesHex := BytesHex;
   AResult.CapturedAt := FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', Now);
   AResult.Sequence := FSequence;
-  AResult.Changed := (FLastBytesHex <> '') and (FLastBytesHex <> BytesHex);
-  FLastBytesHex := BytesHex;
+  // Compare against this field's previous successful observation, not the
+  // last field captured globally. Different fields commonly have different
+  // byte representations and must never create false change events.
+  BaselineIndex := FLastFieldIds.IndexOf(AField.FieldId);
+  AResult.Changed := (BaselineIndex >= 0) and
+    (FLastFieldBytes[BaselineIndex] <> BytesHex);
+  if BaselineIndex < 0 then
+  begin
+    FLastFieldIds.Add(AField.FieldId);
+    FLastFieldBytes.Add(BytesHex);
+  end
+  else
+    FLastFieldBytes[BaselineIndex] := BytesHex;
+
+  // JSON booleans are lowercase; Pascal BoolToStr(True) would emit "True",
+  // which is not valid JSON.
+  if AResult.Changed then ChangedJson := 'true' else ChangedJson := 'false';
   Result := TCEAResult.Ok('{"address":"' + AResult.AddressHex +
     '","bytes":"' + BytesHex + '","sequence":' + IntToStr(FSequence) +
-    ',"changed":' + BoolToStr(AResult.Changed, True) + '}');
+    ',"changed":' + ChangedJson + '}');
 end;
 
 end.

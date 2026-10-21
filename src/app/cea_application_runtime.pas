@@ -144,6 +144,8 @@ type
     FUiProposalSchemas: TStringList;
     FCaptureService: TCEAStateCaptureService;
     FCapturePid: Cardinal;
+    FCaptureIdentityId: string;
+    FCaptureEpoch: QWord;
     FDiscoveryEffectScope: TStringList;
     FRevokedDiscoveryScopes: TStringList;
     FSelectedDiscoveryScopeId: string;
@@ -1178,6 +1180,8 @@ begin
   FreeAndNil(FGcmCatalog);
   FreeAndNil(FCaptureService);
   FCapturePid := 0;
+  FCaptureIdentityId := '';
+  FCaptureEpoch := 0;
   FreeAndNil(FSecondaryScreen);
   FSecondaryScreenPort := 0;
   FSecondaryScreenPageId := '';
@@ -3073,6 +3077,8 @@ begin
     Identity.ExecutableSha256, Identity.ModuleSetHash);
   FreeAndNil(FCaptureService);
   FCapturePid := Identity.Pid;
+  FCaptureIdentityId := Identity.Id;
+  FCaptureEpoch := Identity.Epoch;
   Result := TCEAResult.Ok('{"game_name":"' + JsonEscapeText(AGameName) +
     '","game_version":"' + JsonEscapeText(AGameVersion) +
     '","target_pid":' + IntToStr(Identity.Pid) +
@@ -3099,6 +3105,8 @@ begin
   FWriteAccess := cea_write_access.DisableWriteAccess;
   FreeAndNil(FCaptureService);
   FCapturePid := 0;
+  FCaptureIdentityId := '';
+  FCaptureEpoch := 0;
   FreeAndNil(FGameModel);
 end;
 
@@ -3654,6 +3662,17 @@ begin
     FCaptureService := TCEAStateCaptureService.Create(FEffectBackend,
       Identity.Pid);
     FCapturePid := Identity.Pid;
+    FCaptureIdentityId := Identity.Id;
+    FCaptureEpoch := Identity.Epoch;
+  end
+  else if (FCaptureIdentityId <> Identity.Id) or
+          (FCaptureEpoch <> Identity.Epoch) then
+  begin
+    // A PID may remain stable while module identity / Epoch changes. Do not
+    // compare a new target state against values observed under the old identity.
+    FCaptureService.ResetBaseline;
+    FCaptureIdentityId := Identity.Id;
+    FCaptureEpoch := Identity.Epoch;
   end;
   Result := FCaptureService.CaptureField(Field, CaptureResult);
   if Result.Failed then Exit;

@@ -11,12 +11,14 @@ uses
 var
   // 模拟「游戏进程内存中的金币字段」
   Gold: DWord;
+  Gems: DWord;
 
   Backend: TCEAWin32EffectBackend;
   Bus: TCEAFieldCommandBus;
   Capture: TCEAStateCaptureService;
 
   Field: TCEAGameField;
+  Field2: TCEAGameField;
   Command: TCEAFieldWriteCommand;
   WriteResult: TCEAFieldWriteResult;
   CaptureResult: TCEAFieldCaptureResult;
@@ -24,6 +26,7 @@ var
 
 begin
   Gold := 500; // 初始金币 500
+  Gems := 42; // 第二个字段用于证明采集基线按 FieldId 隔离
 
   Backend := TCEAWin32EffectBackend.Create(4096);
   try
@@ -47,6 +50,35 @@ begin
       Assert(R.Code = rcOk, 'capture reads current field bytes');
       Assert(LowerCase(CaptureResult.BytesHex) = 'f4010000',
         'capture reads 500 as dword little-endian'); // 500 = 0x01F4
+      Assert(not CaptureResult.Changed,
+        'first observation establishes a baseline');
+      Assert(Pos('"changed":false', R.DataJson) > 0,
+        'capture response emits valid lowercase JSON boolean');
+
+      // 2b. 交替采集另一个字段不能污染金币字段的比较基线。
+      FillChar(Field2, SizeOf(Field2), 0);
+      Field2.FieldId := 'player.gems';
+      Field2.DisplayName := '宝石';
+      Field2.ValueType := 'dword';
+      Field2.Source := 'win32_memory';
+      Field2.Confidence := 1.0;
+      Field2.Access := faReadOnly;
+      Field2.ValidationStatus := vsObserved;
+      Field2.LastUpdated := '2026-10-19T10:00:00Z';
+      Field2.AddressHex := '0x' + LowerCase(IntToHex(QWord(PtrUInt(@Gems)), 16));
+      R := Capture.CaptureField(Field2, CaptureResult);
+      Assert(R.Code = rcOk, 'capture reads a second field');
+      Assert(not CaptureResult.Changed,
+        'first observation of a different field is not a change');
+      Gems := 43;
+      R := Capture.CaptureField(Field2, CaptureResult);
+      Assert(R.Code = rcOk, 'capture changed second field');
+      Assert(CaptureResult.Changed,
+        'second field detects its own value change');
+      R := Capture.CaptureField(Field, CaptureResult);
+      Assert(R.Code = rcOk, 'capture returns to the original field');
+      Assert(not CaptureResult.Changed,
+        'unchanged original field stays unchanged after another field changes');
 
       // 3. 写入新值 999（对比-写入-读回）
       Command.FieldId := 'player.gold';
