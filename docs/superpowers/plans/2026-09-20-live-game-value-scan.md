@@ -8,7 +8,7 @@
 
 **Tech Stack:** Free Pascal 3.2.2、Lazarus Win64、`VirtualQueryEx`/`ReadProcessMemory`、现有 SQLite/local governance services 与 loopback MCP。
 
-**Spec:** `docs/superpowers/specs/2026-09-13-game-reverse-agent-rebaseline.md` §4.1、§7、§9；`schemas/ce-domain/scan.schema.json`。扫描范围、预算、取消与验证要求由本项目自身的安全边界定义。
+**Spec:** `docs/superpowers/specs/2026-09-13-game-companion-rebaseline.md` §4.1、§7、§9；`schemas/ce-domain/scan.schema.json`。扫描范围、预算、取消与验证要求由本项目自身的安全边界定义。
 
 ## 已观察的失败与成功边界
 
@@ -98,7 +98,7 @@
 
 ### Task 5: 人工单机验收与发布边界
 
-**Files:** Modify `docs/delivery/verification-report.md`, `docs/superpowers/plans/2026-09-13-game-reverse-agent-rebaseline-roadmap.md`.
+**Files:** Modify `docs/delivery/verification-report.md`, `docs/superpowers/plans/2026-09-13-game-companion-roadmap.md`.
 
 **Interfaces:** 人工验收只使用玩家当前授权的单机游戏；记录游戏/版本、目标数值、三次人工变化、候选缩减、覆盖率、只读复核与失败情况，不在仓库持久化个人存档或固定运行时地址。
 
