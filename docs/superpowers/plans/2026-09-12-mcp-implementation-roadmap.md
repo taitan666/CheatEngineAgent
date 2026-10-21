@@ -4,7 +4,7 @@
 
 This roadmap decomposes the approved MCP design into independently testable plans. Execute them in this order:
 
-1. `2026-09-12-agentos-mcp-foundation.md` — durable contracts, governance, protocol, loopback authentication and a fake-backed MCP health server.
+1. `2026-09-12-cheat-engine-agent-mcp-design.md` — MCP protocol, loopback authentication, local governance boundaries, and health-check acceptance.
 2. `2026-09-12-cheat-engine-runtime-adapters.md` — command queue, process identity, real CE reads/scans, locally approved writes, UI and main-program composition.
 3. `2026-09-12-ct-rag-llm-codex-integration.md` — safe CT parsing/index/retrieval, OpenAI-compatible client, credential helper, project configuration and live Codex calls.
 
