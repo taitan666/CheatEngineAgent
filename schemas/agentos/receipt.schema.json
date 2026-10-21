@@ -1,8 +1,0 @@
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.cheatengineagent.local/agentos/receipt.schema.json",
-  "title": "Receipt", "type": "object",
-  "required": ["id", "effect_ref", "attempt", "recorded_at", "result", "response_hash"],
-  "properties": {"id": {"type": "string"}, "effect_ref": {"type": "string"}, "attempt": {"type": "integer", "minimum": 1}, "recorded_at": {"type": "string", "format": "date-time"}, "result": {"enum": ["applied", "rejected", "unknown"]}, "response_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "details": {"type": "object"}},
-  "additionalProperties": false
-}

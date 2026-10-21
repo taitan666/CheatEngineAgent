@@ -8,7 +8,7 @@
 
 ## 1. 目标
 
-在 Lazarus/Delphi Cheat Engine 主程序中内嵌 AgentOS 运行时与 Streamable HTTP MCP 服务，使本机 Codex 能在用户明确授权的单机游戏进程中调用进程枚举、附加、扫描、读取、反汇编、CT 知识检索以及经本机审批的受控修改能力。
+在 Lazarus/Delphi Cheat Engine 主程序中内嵌 应用运行时与 Streamable HTTP MCP 服务，使本机 Codex 能在用户明确授权的单机游戏进程中调用进程枚举、附加、扫描、读取、反汇编、CT 知识检索以及经本机审批的受控修改能力。
 
 本设计不依赖 Codex 插件。Codex 桌面端、CLI 或 IDE 扩展通过项目级 MCP 配置连接本机服务。插件仅作为未来可选的分发包装。
 
@@ -45,7 +45,7 @@ MCP Transport
   v
 Tool Registry + JSON Schema validation
   v
-AgentOS Governance Gateway
+local governance gateway
   +-- Policy / Authority / Lease / Approval
   +-- Effect / Receipt / Proof
   `-- Audit Ledger
@@ -73,7 +73,7 @@ Cheat Engine main thread and bounded workers
 - 输入、输出 JSON Schema；
 - `readOnlyHint`、`destructiveHint` 和幂等属性；
 - 所需 Capability、风险等级、预算种类和超时；
-- 对应的 AgentOS Dispatcher 入口。
+- 对应的 application dispatcher 入口。
 
 所有入参与出参均经过 Schema 校验。未知字段默认拒绝，地址使用无符号十六进制字符串，字节数组使用偶数长度十六进制字符串。
 
@@ -319,7 +319,7 @@ enabled = true
 第一阶段完成需要同时满足：
 
 - 内嵌 MCP 服务通过协议与鉴权测试；
-- AgentOS 治理不能被 MCP 或 UI 旁路；
+- 本地治理流程不能被 MCP 或 UI 绕过；
 - CT RAG 可导入、检索并返回来源与哈希；
 - 自测试目标完成读、扫描、审批写和读回；
 - Codex 重启后能实际调用只读工具；

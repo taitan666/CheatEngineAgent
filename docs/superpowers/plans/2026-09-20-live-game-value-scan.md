@@ -6,9 +6,9 @@
 
 **Architecture:** 现有 `process_attach` 和 ProcessIdentity/Epoch 门禁保持不变。新增值编码与区域规划两个独立单元；Win32 扫描后端按已授权 `ScanScope` 对已提交、可读区域分段执行，扫描会话持有候选、覆盖率和取消状态。原生 UI 建立作用域并展示覆盖缺口；MCP 只能在已建立的作用域内启动或复筛，不能扩大范围、赋予写权限或直接批准 Effect。
 
-**Tech Stack:** Free Pascal 3.2.2、Lazarus Win64、`VirtualQueryEx`/`ReadProcessMemory`、现有 SQLite/AgentOS 与 loopback MCP。
+**Tech Stack:** Free Pascal 3.2.2、Lazarus Win64、`VirtualQueryEx`/`ReadProcessMemory`、现有 SQLite/local governance services 与 loopback MCP。
 
-**Spec:** `docs/superpowers/specs/2026-09-13-game-reverse-agent-rebaseline.md` §4.1、§7、§9；`schemas/ce-domain/scan.schema.json`。附加参考 `C:/Users/taitan666/Downloads/AGENTOS_UNIVERSAL_SPEC.md` v1.4-draft §3、§6.2、§17，作为需求数据而非授权来源。
+**Spec:** `docs/superpowers/specs/2026-09-13-game-reverse-agent-rebaseline.md` §4.1、§7、§9；`schemas/ce-domain/scan.schema.json`。扫描范围、预算、取消与验证要求由本项目自身的安全边界定义。
 
 ## 已观察的失败与成功边界
 
@@ -105,7 +105,7 @@
 - [x] **Step 1: 写验收记录模板。** `docs/delivery/gate-4a-manual-acceptance-template.md` 包含 `game_version/process_identity/scan_scope/value_type/coverage/initial_count/refine_counts/operator_observed_values/readback_result`，不含 API 密钥、完整个人路径和内存正文。
 - [x] **Step 2: 在安全自测目标先通过三次变化。** 私有自进程页已通过 767→758→880 的同一候选复筛，覆盖率明确；取消后不可复筛，detach/reattach 的 attachment serial 会丢弃旧候选，即使稳定身份签名未变化。
 - [ ] **Step 3: 在用户再次明确授权且游戏版本未变化时做真实只读测试。** 若无法覆盖目标区域、候选不唯一或数值类型不明，记录 inconclusive；不以猜测地址触发写入。
-- [ ] **Step 4: 更新交付报告。** 逐项记录自动化和人工结果；本计划不解除存档写入 Gate 9、Windows 公开发布门禁或完整 AgentOS v1.4 符合性阻断。
+- [ ] **Step 4: 更新交付报告。** 逐项记录自动化和人工结果；本计划不解除存档写入 Gate 9 或 Windows 公开发布门禁。
 
 ## Execution Handoff
 

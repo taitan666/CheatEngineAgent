@@ -1,4 +1,4 @@
-program test_agentos_governance;
+program test_governance_services;
 
 {$mode objfpc}{$H+}
 
@@ -123,7 +123,7 @@ begin
       LegacyPolicy.Free;
     end;
 
-    WriteLn('AGENTOS_GOVERNANCE=PASS');
+    WriteLn('PASCAL_TEST=PASS');
   finally
     Gateway.Free;
     Effects.Free;

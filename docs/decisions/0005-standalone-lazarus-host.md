@@ -7,7 +7,7 @@
 
 ## 决策
 
-CheatEngineAgent 作为独立 Windows Lazarus/Free Pascal 应用交付，不修改、不注入也不启动上游 `cheatengine.exe`。应用拥有自己的主窗口、AgentOS 组合根、LLM 客户端、CT RAG、MCP 回环服务和 Win32 用户态进程能力后端。
+CheatEngineAgent 作为独立 Windows Lazarus/Free Pascal 应用交付，不修改、不注入也不启动上游 `cheatengine.exe`。应用拥有自己的主窗口、应用组合根、LLM 客户端、CT RAG、MCP 回环服务和 Win32 用户态进程能力后端。
 
 Cheat Engine 7.5 仅作为架构与行为参考。可复用代码必须先完成许可证和依赖边界审查；产品运行时不依赖 CE 主窗口、全局 ProcessHandle、DBK、内核驱动或 CE 首次启动配置。
 
@@ -21,4 +21,4 @@ Cheat Engine 7.5 仅作为架构与行为参考。可复用代码必须先完成
 
 ## 不变边界
 
-仅限用户授权的单机离线目标；永久拒绝多人/联网修改、反作弊绕过、隐藏和内核/DBK；CT 仅用于带来源的 RAG；永不训练、微调或修改模型权重；写入仍须 AgentOS Effect、本机审批、写前比较、读回与 Proof。
+仅限用户授权的单机离线目标；永久拒绝多人/联网修改、反作弊绕过、隐藏和内核/DBK；CT 仅用于带来源的 RAG；永不训练、微调或修改模型权重；写入仍须 受治理 Effect、本机审批、写前比较、读回与 Proof。

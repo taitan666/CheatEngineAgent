@@ -6,7 +6,7 @@
 
 **Architecture:** `SaveDiscoveryService` 管理会话作用域、预算与候选，Win32 端口只枚举元数据；现有 `InspectSaveFile` 是候选进入存档工作台的唯一正文读取入口。UI 建立与撤销范围，MCP 不创建范围。
 
-**Tech Stack:** Free Pascal 3.2.2、Lazarus Win64、Windows 文件 API、现有 AgentOS runtime、Pascal/PowerShell 测试。
+**Tech Stack:** Free Pascal 3.2.2、Lazarus Win64、Windows 文件 API、现有 application runtime、Pascal/PowerShell 测试。
 
 **Spec:** `docs/superpowers/specs/2026-09-20-save-discovery-design.md`
 

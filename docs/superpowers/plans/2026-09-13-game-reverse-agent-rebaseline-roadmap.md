@@ -2,13 +2,13 @@
 
 日期：2026-09-13  
 状态：已批准  
-产品定位：面向玩家的商业级、Windows 优先、单机离线游戏助手；AgentOS 是受控状态与操作底座，不把应用扩展为未经确认的通用跨领域 AgentOS 产品。  
+产品定位：面向玩家的商业级、Windows 优先、单机离线游戏助手；本地治理服务是受控状态与操作底座，不把应用扩展为未经确认的通用跨领域 Agent 产品。  
 交付顺序：先完成 Windows 核心能力与真实验收；攻略 PDF/OCR、Live2D、语音、Android 等扩展愿景已归档至 [未来扩展](../future-extensions.md)，不阻塞基础功能交付。
 
 ## 当前进度
 
 - Gate 0：完成（权威重基线、ADR、上游参考盘点）。
-- Gate 1：完成（AgentOS/MCP 基线全绿）。
+- Gate 1：完成（治理/MCP 基线全绿）。
 - Gate 2：完成核心契约、Schema、Pascal 类型与不变量测试；完整 JSON Schema 2020-12 独立验证器仍是已记录的工具边界。
 - Gate 3：完成 fake-backed 实验闭环与治理门禁。
 - Gate 4：完成（按 ADR 0005 的独立 Lazarus 宿主重基线）。独立应用通过真实子进程完成 ProcessIdentity/Epoch、只读附加、模块、内存读取、AOB scan/refine/cancel 和有界基础反汇编；后台 MCP 调用经 owner-thread 队列调度，不直接访问 UI 或进程对象。
@@ -18,13 +18,12 @@
 - Gate 7（部分完成）：OpenAI-compatible 与 Anthropic-compatible WinHTTP 客户端、Credential Manager 安全录入/读取、Provider UI 选择和 RAG 提议工作台已实现；请求前 prompt/RAG/output 预算、实际 token 总量校验、分块读取取消、UI 工作线程取消以及 timeout/cancel 不重试已实现。两种协议的 SSE 分片解析、Provider 流式请求/归一化和主线程安全增量显示已有自动化与构建证据。真实第三方 Provider（含 `deepseek-flash`）互操作、真实网络流式/取消以及原生工作台人工点击验收仍待完成；不得使用或持久化聊天中暴露过的旧密钥。
 - Gate 8：loopback Streamable HTTP、Bearer、Codex 用户级/项目级配置、可复现插件包、个人市场安装和真实新应用 HTTP `cea.health` 调用已通过。MCP 现注册 27 个工具（补齐 `cea.list_modules`），全部工具使用闭合输入 Schema；服务端在分派前拒绝未知字段、缺失必填项、非法枚举、越界数值、非法地址/十六进制和嵌套范围未知字段。当前任务不会热刷新插件工具目录，重启后新 Codex 任务中的原生工具发现/调用仍待人工确认。
 - 存档扩展（2026-09-20）：格式无关的只读快照、身份/哈希复核、独立备份、`CEA-SAVE-1` 测试 Codec、字段提议、本机审批的编辑/恢复、启动时只读对账及存档工作台/MCP 限权入口已实现并通过自动化测试。未知格式仅只读/备份；真实游戏格式、UI 视觉验收和单机游戏人工实机验收仍待完成。此项不改变 Gate 9 状态。
-- AgentOS v1.4/“数字生命”评估（2026-09-20）：见 `docs/delivery/agentos-v1.4-digital-life-gap-assessment.md`。这是现状与可选产品路线，不是已批准的新增功能；当前应用不具备完整的持续目标、通用记忆/上下文与 v1.4 运行时符合性。
 - 商业级产品重定位（2026-09-20）：用户确认本应用应按正式面向玩家的软件规划。攻略/设定集 PDF、Live2D 等扩展愿景已归档至 [未来扩展](../future-extensions.md)。引用对话当前无法可靠读取，暂不把其未核实细节写成要求。
 - CT 生成演进目标（2026-09-21）：用户要求应用最终能在后台**提出**新 `.CT` 草案。确定性“证据编译器”架构 `docs/superpowers/specs/2026-09-21-ct-draft-generation-design.md` 已获用户批准；对应的 9 任务、48 步 TDD 实施计划位于 `docs/superpowers/plans/2026-09-21-ct-draft-generation.md`，当前等待计划评审确认。尚无生成器或自动导出实现，未经计划确认不进入编码。
 
 ## 全局约束
 
-所有任务都遵守：仅限用户授权的单机离线目标；禁止多人/联网修改、反作弊绕过、隐藏、内核/DBK；CT 只做 RAG；永不训练、微调或修改模型权重。所有外部修改必须走 AgentOS Effect、CE 本机审批、执行前复核、读回和 Proof。
+所有任务都遵守：仅限用户授权的单机离线目标；禁止多人/联网修改、反作弊绕过、隐藏、内核/DBK；CT 只做 RAG；永不训练、微调或修改模型权重。所有外部修改必须走 受治理 Effect、CE 本机审批、执行前复核、读回和 Proof。
 
 ## 工作包 0：重基线与现有代码盘点
 
@@ -46,7 +45,7 @@
 - 文档明确 standalone-Windows-first、Android-second、native-workbench-primary、MCP-secondary。
 - 旧计划没有被删除，且冲突处指向本重基线。
 
-## 工作包 1：稳定当前 AgentOS/MCP 基线
+## 工作包 1：稳定当前 治理/MCP 基线
 
 ### 目标
 

@@ -6,7 +6,7 @@
 
 ## 背景
 
-原设计以 Lazarus/Delphi 主程序中的 AgentOS、LLM 和 MCP 接入为主线。对 Cheat Engine AITools、多种 CE MCP 桥接器以及 Android 内存修改器的源码调研表明，MCP 是有用的接入面，但不是能够沉淀跨平台能力的产品核心。真正需要复用的是实验规划、证据、配方和验证语义。
+原设计以 Lazarus/Delphi 主程序中的 本地治理层、LLM 和 MCP 接入为主线。对 Cheat Engine AITools、多种 CE MCP 桥接器以及 Android 内存修改器的源码调研表明，MCP 是有用的接入面，但不是能够沉淀跨平台能力的产品核心。真正需要复用的是实验规划、证据、配方和验证语义。
 
 ## 决策
 
@@ -14,7 +14,7 @@
 2. Windows Cheat Engine 宿主是第一阶段唯一交付目标，继续使用 Lazarus/Free Pascal 并接入真实、经授权的单机离线进程。
 3. CE 内置 AI 工作台是主要用户入口；MCP 是次级外部控制、诊断和实机测试接口。
 4. Android 是第二阶段的独立宿主，共享版本化 Schema 和行为测试，不把 Kotlin、Rust 或 C++ 运行时嵌入 Pascal 主程序。
-5. 已实现的 AgentOS 治理、事件存储、Schema 基础与 MCP 协议代码保留；MCP 不得绕过同一 Governance Gateway。
+5. 已实现的 本地治理层 治理、事件存储、Schema 基础与 MCP 协议代码保留；MCP 不得绕过同一 Governance Gateway。
 6. CT 只进入带来源和哈希的 RAG；永久禁止训练、微调和模型权重改写。
 
 ## 后果

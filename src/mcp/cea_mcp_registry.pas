@@ -441,7 +441,7 @@ const
     '"proposal_id":{"type":"string","minLength":1,"maxLength":128}},' +
     '"required":["proposal_id"],"additionalProperties":false}';
 begin
-  ARegistry.RegisterTool('cea.health', 'Return local AgentOS and MCP health',
+  ARegistry.RegisterTool('cea.health', 'Return local application and MCP health',
     EmptySchema, True, False, True, 'runtime_health');
   ARegistry.RegisterTool('cea.get_runtime_state', 'Return bounded runtime state',
     EmptySchema, True, False, True, 'runtime_state');

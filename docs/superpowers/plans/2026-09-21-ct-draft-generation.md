@@ -6,7 +6,7 @@
 
 **Architecture:** Typed proposal data is resolved against authoritative persisted Recipe, Verification, Candidate, Evidence and Proof records before a validated immutable draft is stored. A pure Pascal exporter produces deterministic UTF-8 XML; a separate local governed export service alone may create a new file and records Effect, Receipt and Proof. The UI and MCP share repository projections, while MCP has no approval, export, activation or script authority.
 
-**Tech Stack:** Free Pascal 3.2.2, Lazarus/LCL, FCL JSON/XML, SQLDB/SQLite, Win32 create-new file APIs, AgentOS governance services, JSON Schema Draft 2020-12 documents.
+**Tech Stack:** Free Pascal 3.2.2, Lazarus/LCL, FCL JSON/XML, SQLDB/SQLite, Win32 create-new file APIs, local governance services, JSON Schema Draft 2020-12 documents.
 
 **Spec:** `docs/superpowers/specs/2026-09-21-ct-draft-generation-design.md`
 
@@ -422,7 +422,7 @@ Extend startup reconciliation so an `executing` `ct_draft_export` Effect becomes
 
 - [ ] **Step 6: Run GREEN and checkpoint**
 
-Run export, AgentOS governance, local approval, state-store, release static safety and compile-smoke tests. Expected: create-new success and every injected failure behave as specified.
+Run export, local governance services governance, local approval, state-store, release static safety and compile-smoke tests. Expected: create-new success and every injected failure behave as specified.
 
 ### Task 7: Runtime integration, background proposal and native workbench
 

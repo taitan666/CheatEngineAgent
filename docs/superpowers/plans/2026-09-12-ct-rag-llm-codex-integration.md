@@ -12,7 +12,7 @@
 
 ## Global Constraints
 
-- Complete the AgentOS MCP foundation before live Codex testing; CE adapter tasks may run independently except for final E2E.
+- Complete the MCP and local governance foundation before live Codex testing; CE adapter tasks may run independently except for final E2E.
 - CT XML parsing must disable external entities and must never execute AA or Lua.
 - Every indexed record and RAG result includes source URI and SHA-256.
 - Provider secrets are resolved by reference and never appear in configuration, logs or MCP responses.

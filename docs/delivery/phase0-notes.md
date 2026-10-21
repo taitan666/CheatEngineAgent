@@ -147,7 +147,7 @@ PRD 12 Phase 0 退出条件：
 
 ### 6.4 Profile 接入主程序 + 测试基建修复（2026-10-20）
 
-- **Profile 服务接入 `cea_application_runtime`**：`Runtime.Start` 现在初始化 `TCEAProfileStore`（独立数据库 `profiles.sqlite3`，与治理库 `agentos.sqlite3` 同级）+ `TCEAProfileService`，`Runtime.Stop` 释放。Profile 能力成为应用运行时的一部分，不再只是测试引用。
+- **Profile 服务接入 `cea_application_runtime`**：`Runtime.Start` 现在初始化 `TCEAProfileStore`（独立数据库 `profiles.sqlite3`，与治理库 `governance.sqlite3` 同级）+ `TCEAProfileService`，`Runtime.Stop` 释放。Profile 能力成为应用运行时的一部分，不再只是测试引用。
 - **修复测试基建 cwd 缺陷**：`run-test-program.ps1` 原先运行测试 exe 时不切 cwd，导致依赖相对路径 fixture 的测试（如 `test_standalone_app_runtime.pas` 的 `tests\fixtures\ct\minimal-valid.ct`）失败。已改为 `Push-Location $ProjectRoot` 后运行，测试从此从项目根解析相对路径。
 - **验证**：`STANDALONE_APP_RUNTIME=PASS`（此前因 cwd 失败），回归确认 `PHASE1_E2E`、`PROFILE_SERVICE`、`FIELD_COMMAND_FLOW`、`cea_win32_engine_runtime` 全部 PASS。
 
@@ -207,7 +207,7 @@ PRD 12 Phase 0 退出条件：
 - **`Start`/`Stop` 装配**：`Start` 在 Profile 块之后建 `FUiLayoutStore`（`ui-layouts.sqlite3`，与治理库同级）→ `FMappingService` → `FEventService`（`PreRollMs=3000`/`PostRollMs=5000`/`SnapshotCapacity=512`/`DefaultCooldownMs=1000`）→ `FUiRuntime` → `FDisplayEnumerator`；`Stop` 逆序释放并 `FreeAndNil(FGameModel)`、`FCommandBus := nil`。
 
 **桌面主窗口重组（1H，`app/lazarus/cea_main_form.pas`）**
-- 原有 7 个诊断页签（AgentOS / 进程与内存 / CT RAG / 存档工作台 / LLM 工作台 / MCP / 关于与安全）**全部保留但降为次级**，新增 `PlayerTab`（「玩家工作台」，位于首位并设为默认激活页）。
+- 原有 7 个诊断页签（治理与安全 / 进程与内存 / CT RAG / 存档工作台 / LLM 工作台 / MCP / 关于与安全）**全部保留但降为次级**，新增 `PlayerTab`（「玩家工作台」，位于首位并设为默认激活页）。
 - 玩家工作台为三栏（PRD 7.5 线框）：左栏 `FPlayerNav: TListBox`（游戏概览 / 游戏字段 / 写入验证 / 事件时间线 / 副屏 / 设置），中栏 `FPlayerCenterPanel`（按导航切换 6 个 section 面板），右栏 `FPlayerDetailPanel`（字段语义详情 + 操作反馈）。
 - 字段状态用「颜色 + 文字」双重信号：`UpdatePlayerDetail` 明确列出 `read_only`（只读，不提供写入入口）/`pending_write`（待验证）/`verified_writable`（可写）/`invalid`（失效）四态及其含义。
 - **两级反馈（FR-044/AC-007）**：`WriteSelectedField` 区分 `verified`（「写入已发送并验证一致」）与其它 outcome（「命令已发送，但尚未验证为修改成功」），绝不含糊。
@@ -292,7 +292,7 @@ PRD 12 Phase 0 退出条件：
 
 **接入主程序 `src/app/cea_application_runtime.pas`**
 - 新增私有字段 `FEventStore: TCEAEventRepository`。
-- `Start` 中（`FDisplayEnumerator` 之后）：`events.sqlite3`（与 `agentos.sqlite3`/`profiles.sqlite3`/`ui-layout.sqlite3` 同目录）→ `Initialize` → `FEventService.SetEventStore(FEventStore)` → `ReloadFromStore`；任一失败即 `raise`。
+- `Start` 中（`FDisplayEnumerator` 之后）：`events.sqlite3`（与 `governance.sqlite3`/`profiles.sqlite3`/`ui-layout.sqlite3` 同目录）→ `Initialize` → `FEventService.SetEventStore(FEventStore)` → `ReloadFromStore`；任一失败即 `raise`。
 - `Stop` 中 `FreeAndNil(FEventService)` 之后 `FreeAndNil(FEventStore)`。
 
 **验证**
@@ -445,7 +445,7 @@ PRD 12 Phase 0 退出条件：
 
 **运行时接入（`src/app/cea_application_runtime.pas`，现 3571 行）**
 
-- 第 5 个 SQLite 库 `ui-pages.sqlite3`（与 `agentos.sqlite3`/`profiles.sqlite3`/`ui-layout.sqlite3`/`events.sqlite3` 并列，同在数据目录）。
+- 第 5 个 SQLite 库 `ui-pages.sqlite3`（与 `governance.sqlite3`/`profiles.sqlite3`/`ui-layout.sqlite3`/`events.sqlite3` 并列，同在数据目录）。
 - 11 个公开 API：`SaveUiPage`/`ListUiPages`/`GetUiPage`/`SetActiveUiPage`/`GetActiveUiPage`/`ListUiSchemaVersions`/`RestoreUiSchemaVersion`/`SetSecondaryScreenPage`/`ProposeUiCustomization`/`ConfirmUiCustomization`/`RejectUiCustomization`。
 - **`ConfirmUiCustomization` 只收 `proposal_id` + 目标 `page_id` + `title`，schema 从内存提案表取**：调用方无法伪造已确认的页面内容。未确认提案只存在内存（`FUiProposalIds`/`FUiProposalSchemas` 两个 `TStringList`），**永不落盘**。
 - `TCEAUiCustomizationService.Provider` 改为 `read/write`：服务在 `Start` 里就要建好，但 provider 要到 `ConfigureLLM` 之后才存在，故 `ConfigureLLM` 成功后注入 `FLLMProvider`。
@@ -675,12 +675,12 @@ FR-046（P0）要求「记录时间、字段、原值、目标值、适配器、
 
 #### 为什么治理账本不够
 
-AgentOS 治理层有完整的 `Effect → Approval → Receipt → Proof` 链路，也有 SQLite ledger。但**玩家级写入根本不走那条链路**：
+治理层 治理层有完整的 `Effect → Approval → Receipt → Proof` 链路，也有 SQLite ledger。但**玩家级写入根本不走那条链路**：
 
 - `WriteFieldValue` 走 `TCEAFieldCommandBus`（`CompareWriteReadback` + 独立重读），产生的是 `TCEAFieldWriteResult`，只有 `Outcome`/`StableCode`/`DetailJson`，**没有 Receipt 也没有 Proof**。
 - `ConfirmFieldWritable` 更彻底，它**绕过 CommandBus**，直接调 `FEffectBackend.CompareWriteReadback`，自己判一致性。
 
-也就是说：治理层的账本记的是「AgentOS 授权的 effect」，玩家改游戏数值这件事在治理账本里**没有任何痕迹**。而后者才是这个产品真正会改变玩家游戏的动作。
+也就是说：治理层的账本记的是「治理层 授权的 effect」，玩家改游戏数值这件事在治理账本里**没有任何痕迹**。而后者才是这个产品真正会改变玩家游戏的动作。
 
 #### 新单元
 
@@ -748,7 +748,7 @@ PRD `FR-052（P0）证据记录：保存候选地址、数据类型、观察到�
 #### 新单元
 - `src/core/reverse/cea_field_evidence.pas`：`TCEAFieldEvidence`（`EvidenceId`/`FieldId`/`DisplayName`/`Kind`/`AddressText`/`ValueType`/`PreviousValueJson`/`ObservedValueJson`/`ProcessIdentityId`/`Epoch`/`ExecutableSha256`/`ModuleSetHash`/`Outcome`/`DetailJson`/`ProvenanceUri`/`ContentHash`/`RecordedAt`）+ `TCEAFieldEvidenceService`（`RecordCapture`/`RecordVerification`/`RecordUserConfirmation`/`ListForField`/`Count`/`ToReference`）。复用既有 `TCEAEvidenceKind`/`TCEAVerificationOutcome`/`TCEAEvidenceReference`，不另造枚举。
 - `src/infrastructure/cea_field_evidence_store.pas`：`TCEAFieldEvidenceStore`（表 `field_evidence`，索引 `idx_field_evidence_field(field_id, sequence DESC)`）+ `TCEAReverseEvidenceStore`（把同一张表适配成既有 `ICEAEvidenceStore`，供逆向编排复用）。
-- 第七个独立 SQLite 库 `field-evidence.sqlite3`，与 `agentos`/`profiles`/`ui-layout`/`events`/`ui-pages`/`write-journal` 平级。
+- 第七个独立 SQLite 库 `field-evidence.sqlite3`，与 `governance`/`profiles`/`ui-layout`/`events`/`ui-pages`/`write-journal` 平级。
 
 #### 三条硬规则（安全边界）
 1. **`supports_write_claim` 只有 `ekMemoryObservation`/`ekVerification` 且 `voPass`/`voInconclusive` 才为真。** `ekUserStatement`（操作者说「这就是金币」）只命名字段，不证明可写；`ekCTArtifact`/`ekDisassembly` 是别的进程/别的版本的证据。`voFail`/`voUnknown` 是反证，更不能支撑。

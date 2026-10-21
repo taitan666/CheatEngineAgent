@@ -161,7 +161,7 @@ space-lg = 24px  space-xl = 32px  space-2xl = 48px  space-3xl = 64px
 
 ### 4.3 与现有 Lazarus 窗口的关系
 
-现有 `cea_main_form.pas` 已有 7 个 Tab（AgentOS/进程内存/CT RAG/存档/LLM/MCP/关于安全），这些是**底层诊断页**。PRD 重组为玩家级三栏时：
+现有 `cea_main_form.pas` 已有 7 个 Tab（治理与安全/进程内存/CT RAG/存档/LLM/MCP/关于安全），这些是**底层诊断页**。PRD 重组为玩家级三栏时：
 
 - **保留**：进程内存、存档、LLM、MCP、关于安全（作为「底层/诊断」次级页）
 - **新增玩家级**：游戏概览、副屏页面、数据字段、金手指实验室、Game Profile、操作历史、事件时间线

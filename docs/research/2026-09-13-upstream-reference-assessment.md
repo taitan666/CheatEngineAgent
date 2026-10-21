@@ -5,7 +5,7 @@
 
 ## 结论
 
-项目需要重新基线化，但不需要推倒重来。现有 AgentOS 治理、Schema、事件存储、CT RAG 设计、LLM Provider 抽象和 MCP 协议基础继续保留；需要调整的是产品核心与交付顺序。
+项目需要重新基线化，但不需要推倒重来。现有 本地治理层 治理、Schema、事件存储、CT RAG 设计、LLM Provider 抽象和 MCP 协议基础继续保留；需要调整的是产品核心与交付顺序。
 
 新的中心应是平台无关的 **Game Reverse Agent Core**，而不是 MCP Server 本身。MCP 作为 Codex/外部客户端的次级控制与测试接口；Windows Cheat Engine 内置聊天与工作台作为第一阶段主要用户入口。Android 是共享同一领域协议的独立宿主，不应把 Kotlin/Rust/C++ 代码塞进 Lazarus 主程序。
 
@@ -13,7 +13,7 @@
 
 | 参考项目 | 可借鉴部分 | 不直接采用的部分 |
 | --- | --- | --- |
-| Cheat Engine AITools | CE 内原生 AI 交互、Lua 工具调用、用户工作流 | 单一模型/提示词绑定；缺少 AgentOS 治理与证据闭环 |
+| Cheat Engine AITools | CE 内原生 AI 交互、Lua 工具调用、用户工作流 | 单一模型/提示词绑定；缺少 本地治理层 治理与证据闭环 |
 | tonytranrp Cheat-Engine-Mcp | loader/core 热替换、广覆盖工具注册、会话隔离 | 巨大平面工具面；仓库授权文本需进一步确认 |
 | miscusi MCP bridge | 薄 MCP 包装、CE 主线程调度、命名管道恢复 | DBVM、任意 Lua/命令等超出本项目永久边界的能力 |
 | ShadowNineX ce-mcp | CE 内嵌 Streamable HTTP、单 DLL、协议测试 | .NET 运行时依赖；不能替代 Pascal 内核 |
@@ -32,7 +32,7 @@
        | Verifier / Stabilizer / Replay              |
        +---------------------+-----------------------+
                              |
-                  AgentOS Governance Gateway
+                  本地治理层 Governance Gateway
           Policy / Lease / Approval / Effect / Proof
                  /                         \
         Windows CE Host                Android Host
@@ -50,7 +50,7 @@
 
 ### 保留
 
-- AgentOS 的 Authority、Policy、Lease、Approval、Effect、Receipt、Proof 与审计事件。
+- 应用自己的授权、策略、Lease、Approval、Effect、Receipt、Proof 与审计事件。
 - SQLite 事件存储和 Schema 校验基础。
 - CT 安全解析、来源/哈希、结构提取与 RAG；永久不训练或改写模型权重。
 - 进程身份、Epoch、执行前复核、写后读回和 `unknown_outcome` 语义。
@@ -72,7 +72,7 @@
 
 ## 推荐的新实施顺序
 
-1. 完成当前 AgentOS + MCP 最小协议测试，形成可回归的稳定基线。
+1. 完成当前 本地治理层 + MCP 最小协议测试，形成可回归的稳定基线。
 2. 定义并测试 Reverse Agent 领域 Schema 与 Pascal 接口。
 3. 在 Windows CE 上完成一个端到端实验闭环：扫描、缩小、形成假设、受控写入、读回验证、保存配方。
 4. 接入 CT RAG，让实验规划引用来源和哈希，但不执行导入脚本。

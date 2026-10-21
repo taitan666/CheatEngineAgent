@@ -105,7 +105,7 @@ Verified Recipe / Candidate / Evidence / Proof
    Local export request
           |
           v
-   AgentOS ct_draft_export Effect
+   locally approved ct_draft_export Effect
           |
           v
  Deterministic CT XML exporter
@@ -115,7 +115,7 @@ Verified Recipe / Candidate / Evidence / Proof
  - Receipt + Proof
 ```
 
-Dependencies remain Host/UI/Transport → CT Draft Core → AgentOS Ports. The core does not reference LCL controls, MCP JSON objects, Win32 dialogs or a concrete Provider.
+Dependencies remain Host/UI/Transport → CT Draft Core → local governance ports. The core does not reference LCL controls, MCP JSON objects, Win32 dialogs or a concrete Provider.
 
 ## 6. Background proposal behavior
 

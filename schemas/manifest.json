@@ -6,7 +6,6 @@
   "hash_format": "sha256:<64 lowercase hexadecimal digits>",
   "schemas": [
     "common/definitions.schema.json",
-    "agentos/envelope.schema.json", "agentos/task-contract.schema.json", "agentos/task.schema.json", "agentos/feature-set.schema.json", "agentos/resolved-execution-manifest.schema.json", "agentos/lease.schema.json", "agentos/approval.schema.json", "agentos/effect.schema.json", "agentos/receipt.schema.json", "agentos/proof.schema.json", "agentos/commit-request.schema.json", "agentos/work-ledger.schema.json", "agentos/verification-ledger.schema.json", "agentos/remaining-boundary.schema.json",
     "ce-domain/process.schema.json", "ce-domain/memory.schema.json", "ce-domain/memory-freeze.schema.json", "ce-domain/scan.schema.json", "ce-domain/debug.schema.json", "ce-domain/script-execution.schema.json",
     "ct-knowledge/catalog-source.schema.json", "ct-knowledge/cheat-table.schema.json", "ct-knowledge/search.schema.json", "ct-knowledge/rag-context.schema.json",
     "llm/provider.schema.json", "llm/model-invocation.schema.json", "llm/tool-proposal.schema.json",
