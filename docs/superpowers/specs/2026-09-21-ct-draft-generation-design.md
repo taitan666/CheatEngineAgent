@@ -6,7 +6,7 @@ Product scope: Windows-first offline single-player game assistant
 
 ## 1. Purpose
 
-Add a provenance-bound pipeline that can turn verified reverse-engineering evidence into a reviewable Cheat Engine table draft. The application may produce the draft asynchronously after a Recipe reaches a verified state, but the draft has no execution authority. A player must review it locally and explicitly export it to a new `.CT` file.
+Add a provenance-bound pipeline that can turn verified game-state discovery evidence into a reviewable Cheat Engine table draft for the Game Companion assistant. The application may produce the draft asynchronously after a Recipe reaches a verified state, but the draft has no execution authority. A player must review it locally and explicitly export it to a new `.CT` file.
 
 Success means the application can explain where every generated record came from, refuse incompatible or incomplete evidence, generate deterministic XML without model-authored markup, and prove exactly what bytes were written to a newly created file. Success does not mean automatically activating a table or modifying a game.
 
