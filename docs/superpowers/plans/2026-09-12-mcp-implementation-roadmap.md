@@ -1,6 +1,6 @@
 # Cheat Engine Agent MCP Implementation Roadmap
 
-> Status update (2026-09-13): retained as a subordinate MCP work plan. Product architecture and execution order are governed by `2026-09-13-game-reverse-agent-rebaseline-roadmap.md`. MCP is now a secondary adapter, not the product core.
+> Status update (2026-09-13): retained as a subordinate MCP work plan. Product architecture and execution order are governed by `2026-09-13-game-companion-roadmap.md`. MCP is now a secondary adapter, not the product core.
 
 This roadmap decomposes the approved MCP design into independently testable plans. Execute them in this order:
 
