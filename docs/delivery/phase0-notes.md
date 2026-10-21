@@ -748,7 +748,7 @@ PRD `FR-052（P0）证据记录：保存候选地址、数据类型、观察到�
 #### 新单元
 - `src/core/reverse/cea_field_evidence.pas`：`TCEAFieldEvidence`（`EvidenceId`/`FieldId`/`DisplayName`/`Kind`/`AddressText`/`ValueType`/`PreviousValueJson`/`ObservedValueJson`/`ProcessIdentityId`/`Epoch`/`ExecutableSha256`/`ModuleSetHash`/`Outcome`/`DetailJson`/`ProvenanceUri`/`ContentHash`/`RecordedAt`）+ `TCEAFieldEvidenceService`（`RecordCapture`/`RecordVerification`/`RecordUserConfirmation`/`ListForField`/`Count`/`ToReference`）。复用既有 `TCEAEvidenceKind`/`TCEAVerificationOutcome`/`TCEAEvidenceReference`，不另造枚举。
 - `src/infrastructure/cea_field_evidence_store.pas`：`TCEAFieldEvidenceStore`（表 `field_evidence`，索引 `idx_field_evidence_field(field_id, sequence DESC)`）+ `TCEAReverseEvidenceStore`（把同一张表适配成既有 `ICEAEvidenceStore`，供逆向编排复用）。
-- 第七个独立 SQLite 库 `field-evidence.sqlite3`，与 `agentos`/`profiles`/`ui-layout`/`events`/`ui-pages`/`write-journal` 平级。
+- 第七个独立 SQLite 库 `field-evidence.sqlite3`，与 `governance`/`profiles`/`ui-layout`/`events`/`ui-pages`/`write-journal` 平级。
 
 #### 三条硬规则（安全边界）
 1. **`supports_write_claim` 只有 `ekMemoryObservation`/`ekVerification` 且 `voPass`/`voInconclusive` 才为真。** `ekUserStatement`（操作者说「这就是金币」）只命名字段，不证明可写；`ekCTArtifact`/`ekDisassembly` 是别的进程/别的版本的证据。`voFail`/`voUnknown` 是反证，更不能支撑。
