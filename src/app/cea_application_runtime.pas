@@ -972,7 +972,7 @@ begin
         if not ForceDirectories(DataDirectory) then
           raise Exception.Create('Could not create application data directory');
         FDatabasePath := IncludeTrailingPathDelimiter(DataDirectory) +
-          'agentos.sqlite3';
+          'governance.sqlite3';
       end;
     end;
     FCTParser := TCTParser.Create(FHasher, 16 * 1024 * 1024);
