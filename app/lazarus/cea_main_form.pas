@@ -458,7 +458,7 @@ begin
   FStatusLabel.Parent := Header;
   FStatusLabel.Left := 16;
   FStatusLabel.Top := 16;
-  FStatusLabel.Caption := 'AgentOS: starting';
+  FStatusLabel.Caption := '治理服务：正在启动';
 
   RefreshButton := TButton.Create(Self);
   RefreshButton.Parent := Header;
@@ -1549,13 +1549,13 @@ begin
   FieldLabel.Parent := FSecSettings;
   FieldLabel.Left := 12;
   FieldLabel.Top := 10;
-  FieldLabel.Caption := '底层诊断与治理页签仍在右侧页签中保留：AgentOS / 进程与内存 / ' +
+  FieldLabel.Caption := '底层诊断与治理页签仍在右侧页签中保留：治理与安全 / 进程与内存 / ' +
     'CT RAG / 存档工作台 / LLM 工作台 / MCP / 关于与安全。';
   FieldLabel.AutoSize := True;
 
   AgentPage := TTabSheet.Create(Self);
   AgentPage.PageControl := Pages;
-  AgentPage.Caption := 'AgentOS';
+  AgentPage.Caption := '治理与安全';
   AddPlaceholder(AgentPage,
     '治理内核：任务、Lease、Effect、Receipt、Proof 与审计状态。');
 
@@ -2179,10 +2179,10 @@ begin
   FRuntime := TCEAStandaloneRuntime.Create;
   StartResult := FRuntime.Start;
   if StartResult.Failed then
-    FStatusLabel.Caption := 'AgentOS: 启动失败 / ' + StartResult.StableCode
+    FStatusLabel.Caption := '治理服务：启动失败 / ' + StartResult.StableCode
   else
   begin
-    FStatusLabel.Caption := 'AgentOS: 已就绪（独立治理模式）';
+    FStatusLabel.Caption := '治理服务：已就绪（独立运行）';
     FMCPMemo.Text := 'Endpoint: ' + FRuntime.MCPEndpoint + LineEnding +
       'Bearer token（仅本次运行）: ' + FRuntime.MCPToken + LineEnding +
       LineEnding + '仅监听 127.0.0.1。MCP 可以查询、扫描、检索 CT 和创建 ' +
@@ -3326,7 +3326,7 @@ begin
       mtError, [mbOK], 0)
   else
   begin
-    FStatusLabel.Caption := 'AgentOS: 已紧急停止（Lease 已撤销，目标已分离）';
+    FStatusLabel.Caption := '治理服务：已紧急停止（操作授权已撤销，目标已分离）';
     MessageDlg('已撤销 Lease、拒绝待执行 Effect 并分离目标。',
       mtInformation, [mbOK], 0);
   end;
