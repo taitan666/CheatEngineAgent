@@ -5,6 +5,7 @@ build/lazarus/
 *.a
 *.compiled
 *.res
+!app/lazarus/cheat_engine_agent.res
 
 # --- generated outputs -----------------------------------------------------------
 dist/

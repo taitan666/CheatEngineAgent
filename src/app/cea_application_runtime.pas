@@ -38,6 +38,13 @@ uses
   cea_reverse_types, cea_field_evidence, cea_field_evidence_store,
   cea_discovery_round, cea_discovery_goal;
 
+var
+  { Portable data directory override. When non-empty, every database is stored
+    under this path instead of %APPDATA%\CheatEngineAgent. It is assigned from
+    the --data-dir command line option before any runtime is created, and it
+    never changes after Start. }
+  CeaDatabasePathOverride: string = '';
+
 type
   TCEAStandaloneRuntime = class;
 
@@ -954,12 +961,17 @@ begin
     FLLMTransport := TCEAWinHttpTransport.Create(4 * 1024 * 1024);
     if FDatabasePath = '' then
     begin
-      DataDirectory := IncludeTrailingPathDelimiter(GetAppConfigDir(False)) +
-        'CheatEngineAgent';
-      if not ForceDirectories(DataDirectory) then
-        raise Exception.Create('Could not create application data directory');
-      FDatabasePath := IncludeTrailingPathDelimiter(DataDirectory) +
-        'agentos.sqlite3';
+      if CeaDatabasePathOverride <> '' then
+        FDatabasePath := CeaDatabasePathOverride
+      else
+      begin
+        DataDirectory := IncludeTrailingPathDelimiter(GetAppConfigDir(False)) +
+          'CheatEngineAgent';
+        if not ForceDirectories(DataDirectory) then
+          raise Exception.Create('Could not create application data directory');
+        FDatabasePath := IncludeTrailingPathDelimiter(DataDirectory) +
+          'agentos.sqlite3';
+      end;
     end;
     FCTParser := TCTParser.Create(FHasher, 16 * 1024 * 1024);
     FCTCatalog := TCTCatalog.Create(FDatabasePath);

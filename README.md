@@ -37,6 +37,28 @@ Run the local validation with:
 powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\schema-check\check-schemas.ps1
 ```
 
+## Release build and portable mode
+
+`build\build-release.ps1` drives the FPC compiler directly (no `lazbuild`), writes `dist\CheatEngineAgent.exe`, copies the bundled `sqlite3.dll`, and emits `dist\release-manifest.json` with the SHA-256 and length of every shipped file:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\build\build-release.ps1 -Version 0.1.0
+```
+
+By default the application keeps its seven SQLite databases under `%APPDATA%\CheatEngineAgent`. Pass `--data-dir <path>` to keep them next to a chosen directory instead (portable mode):
+
+```powershell
+.\dist\CheatEngineAgent.exe --data-dir .\data
+```
+
+`--self-test` starts the runtime, calls `cea.health` over the in-process MCP dispatcher and exits with `0` on success (`20` when startup fails, `21` when the health call does not report `ready`, `22` when the data directory cannot be created). It is the headless smoke test used for release builds:
+
+```powershell
+.\dist\CheatEngineAgent.exe --self-test --data-dir .\dist\_selftest
+```
+
+Release artifacts are unsigned. Windows SmartScreen will warn, and no Authenticode chain is claimed.
+
 ## Codex MCP connection
 
 The project-scoped `.codex/config.toml` registers the standalone application at `http://127.0.0.1:32145/mcp`. A validated Codex plugin package is also kept in `tools/codex-mcp/plugin`; the personal plugin `cheat-engine-agent@personal` can be installed from that package and uses the same environment-only credential reference. Build the application, create or rotate the bearer token, and start it with:
