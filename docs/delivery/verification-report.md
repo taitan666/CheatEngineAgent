@@ -10,7 +10,7 @@ Fresh evidence after the change: the focused MCP/runtime suite passed, all **43/
 
 ## CT draft generation design checkpoint — 2026-09-21
 
-The approved design is recorded in `docs/superpowers/specs/2026-09-21-ct-draft-generation-design.md`. It selects a deterministic evidence compiler: model/user suggestions are typed, authoritative addresses and compatibility data are resolved from verified stored evidence, and Pascal emits an inactive script-free CT subset. Export would be a local-only create-new AgentOS Effect with readback hash and Receipt/Proof; MCP would be limited to proposal and query operations. Its 9-task/48-step TDD implementation plan is `docs/superpowers/plans/2026-09-21-ct-draft-generation.md` and awaits plan-review confirmation. No implementation, approval/export endpoint or claim of CT generation exists at this checkpoint.
+The approved design is recorded in `docs/superpowers/specs/2026-09-21-ct-draft-generation-design.md`. It selects a deterministic evidence compiler: model/user suggestions are typed, authoritative addresses and compatibility data are resolved from verified stored evidence, and Pascal emits an inactive script-free CT subset. Export would be a local-only create-new local governance Effect with readback hash and Receipt/Proof; MCP would be limited to proposal and query operations. Its 9-task/48-step TDD implementation plan is `docs/superpowers/plans/2026-09-21-ct-draft-generation.md` and awaits plan-review confirmation. No implementation, approval/export endpoint or claim of CT generation exists at this checkpoint.
 
 ## Gate 4a real module-set identity change — 2026-09-21
 
@@ -120,7 +120,7 @@ The user's additional objective—background proposals for new CT tables—is re
 
 The user-authorized single-player `Probably Stolen Demo` process was attached through the local MCP HTTP surface for read-only scanning and then detached; no game memory was written. An AOB scan for the little-endian 32-bit value 767 in one 64 MiB range hit the 2,000-candidate cap without reporting coverage; refining those candidates to 758 returned zero. A second 48 MiB range found 44 candidates for 758; refining to 880 returned zero. These are **inconclusive partial observations**, not evidence that the game's credit value was absent or unmodifiable. The implementation supports only `scan_kind=aob` in the production backend and requires one caller-supplied range, despite the broader Schema. The native workbench has no numeric scan flow, and a Codex-native MCP tool call has not been verified in the current task, although direct local HTTP MCP worked.
 
-The remedy is specified, **not implemented**, in `docs/superpowers/plans/2026-09-20-live-game-value-scan.md` as Gate 4a. The separate `docs/delivery/agentos-v1.4-digital-life-gap-assessment.md` compares this application's broader AgentOS foundation with the user-supplied v1.4-draft. No claim of full AgentOS or “digital life” compliance follows from the existing tests. The Provider credential used in an earlier LAN interoperability check was not persisted in this project; it should be rotated because it was disclosed in chat.
+The remedy is specified, **not implemented**, in `docs/superpowers/plans/2026-09-20-live-game-value-scan.md` as Gate 4a. The separate `docs/delivery/agentos-v1.4-digital-life-gap-assessment.md` compares this application's broader local governance foundation with the user-supplied v1.4-draft. No claim of full local governance or “digital life” compliance follows from the existing tests. The Provider credential used in an earlier LAN interoperability check was not persisted in this project; it should be rotated because it was disclosed in chat.
 
 ## In-progress discovery and release-safety slices — 2026-09-20
 
@@ -148,7 +148,7 @@ The desktop-control surface could not target the newly built application's visib
 
 ## Current verification — 2026-09-13
 
-**Delivery:** AgentOS/MCP foundation and Game Reverse Agent architecture rebaseline  
+**Delivery:** local governance/MCP foundation and Game Reverse Agent architecture rebaseline  
 **Compiler:** Free Pascal 3.2.2, `x86_64-win64`
 
 ### Executed checks
@@ -156,7 +156,7 @@ The desktop-control surface could not target the newly built application's visib
 - `test_assertions_enabled.pas`: PASS; runtime assertions are enabled with `-Sa`.
 - `test_contracts.pas`: PASS.
 - `test_state_store.pas`: PASS; includes executable SQLite store and schema-validator coverage.
-- `test_agentos_governance.pas`: PASS.
+- `test_governance_services.pas`: PASS.
 - `test_mcp_protocol.pas`: PASS; registry, dispatcher and protocol semantic assertions compile and run.
 - `test_reverse_contracts.pas`: PASS; target/Epoch binding, provenance hash, explicit address width, authority-free recipe and Effect classification invariants run with assertions enabled.
 - `test_reverse_orchestrator.pas`: PASS; fake-backed scan/refine, evidence, hypothesis, verification, recipe, governed-effect and cancellation flow.
@@ -193,7 +193,7 @@ The same development session added startup reconciliation for interrupted `execu
 
 ### Current claim boundary
 
-The tested implementation includes contract/result types, AgentOS governance services, SQLite event/governance plus Approval/Receipt/Proof persistence, partial schema validation, loopback MCP HTTP, Reverse Domain contracts, a fake-backed experiment orchestration/verification loop, and a production Win32 backend for real process/memory/module reads, bounded AOB scans, minimal disassembly, locally approved compare-write-readback effects and bounded freeze sessions. Freeze binds the process identity, start time, executable hash, Epoch, exact address and two permitted byte values; every actual write receives readback evidence, while target changes, third values, budget and expiry stop the session. Startup never resumes an interrupted freeze and restore remains a separate Effect. Local CT files are hardened-parsed without execution, SHA-256 addressed, normalized into SQLite and returned as provenance-bound RAG with no authority and conservative license metadata. The OpenAI-compatible and Anthropic-compatible adapters have fake-transport evidence for pre-secret budgets, actual token accounting, SSE streaming and timeout/cancel no-retry, while WinHTTP runs off the UI thread and observes cancellation between blocking operations and response chunks. Lightweight pinyin/token-set CT retrieval is implemented for a disclosed bounded vocabulary. It does **not** yet prove live third-party-provider interoperability, a restarted Codex tool call, user-selected game acceptance, arbitrary Chinese/neural semantic retrieval, or any Android host.
+The tested implementation includes contract/result types, local governance governance services, SQLite event/governance plus Approval/Receipt/Proof persistence, partial schema validation, loopback MCP HTTP, Reverse Domain contracts, a fake-backed experiment orchestration/verification loop, and a production Win32 backend for real process/memory/module reads, bounded AOB scans, minimal disassembly, locally approved compare-write-readback effects and bounded freeze sessions. Freeze binds the process identity, start time, executable hash, Epoch, exact address and two permitted byte values; every actual write receives readback evidence, while target changes, third values, budget and expiry stop the session. Startup never resumes an interrupted freeze and restore remains a separate Effect. Local CT files are hardened-parsed without execution, SHA-256 addressed, normalized into SQLite and returned as provenance-bound RAG with no authority and conservative license metadata. The OpenAI-compatible and Anthropic-compatible adapters have fake-transport evidence for pre-secret budgets, actual token accounting, SSE streaming and timeout/cancel no-retry, while WinHTTP runs off the UI thread and observes cancellation between blocking operations and response chunks. Lightweight pinyin/token-set CT retrieval is implemented for a disclosed bounded vocabulary. It does **not** yet prove live third-party-provider interoperability, a restarted Codex tool call, user-selected game acceptance, arbitrary Chinese/neural semantic retrieval, or any Android host.
 
 ## Historical scaffold verification — 2026-09-12
 
