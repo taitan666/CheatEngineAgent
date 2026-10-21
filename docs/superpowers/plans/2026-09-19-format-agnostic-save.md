@@ -4,7 +4,7 @@
 
 **Goal:** 在独立 Windows/Lazarus 应用中建立存档只读、可验证备份、测试格式字段级受控编辑及独立恢复闭环，同时保留真实游戏格式未验证边界。
 
-**Architecture:** `Save Domain` 只定义资源身份、快照、字段观察和差异；Windows 文件端口负责全部实际文件副作用。文件操作复用 AgentOS Governance Gateway，但先把现有进程专属目标绑定扩展为通用资源身份并保持旧库兼容。游戏格式通过版本化 Codec 注册，未知格式只有只读与备份能力。
+**Architecture:** `Save Domain` 只定义资源身份、快照、字段观察和差异；Windows 文件端口负责全部实际文件副作用。文件操作复用 local governance gateway，但先把现有进程专属目标绑定扩展为通用资源身份并保持旧库兼容。游戏格式通过版本化 Codec 注册，未知格式只有只读与备份能力。
 
 **Tech Stack:** Free Pascal 3.2.2、Lazarus、Win64、现有 SQLite 治理存储、Windows 文件 API、JSON Schema 2020-12、PowerShell 测试脚本。
 
@@ -51,7 +51,7 @@
 - Create: `src/domain/save/cea_save_types.pas`, `src/domain/save/cea_save_ports.pas`
 - Create: `schemas/save-domain/save-target.schema.json`, `schemas/save-domain/save-snapshot.schema.json`, `schemas/save-domain/save-edit-proposal.schema.json`
 - Modify: `src/contracts/cea_types.pas`, `src/core/governance/cea_lease_service.pas`, `src/core/governance/cea_effect_service.pas`, `src/core/governance/cea_governance_gateway.pas`, `src/infrastructure/cea_sqlite_store.pas`, `schemas/manifest.json`, `build/unit-manifest.txt`
-- Test: `tests/pascal/test_save_contracts.pas`, `tests/pascal/test_agentos_governance.pas`, `tests/pascal/test_state_store.pas`
+- Test: `tests/pascal/test_save_contracts.pas`, `tests/pascal/test_governance_services.pas`, `tests/pascal/test_state_store.pas`
 
 **Interfaces:** Existing process-bound calls remain valid. Add `TCEAResourceKind=(rkProcess,rkSaveFile)` and `ResourceKind/ResourceIdentityId` to capability context, Lease, Approval and Effect. A process call keeps its existing `ProcessIdentityId` and maps it to the same resource identity; a save call uses `rkSaveFile` and a nonempty file identity. Declare `ICEASaveReader.Inspect(const APath: string; out ASnapshot: TCEASaveSnapshot): TCEAResult` and `ReadVerified(const ASnapshot: TCEASaveSnapshot; out ABytes: TBytes): TCEAResult`; `ICEASaveCodec.Probe(const ABytes: TBytes; out ADescriptor: TCEASaveFormatDescriptor): TCEAResult`, `Decode(const ABytes: TBytes; out AFields: TCEASaveFieldArray): TCEAResult`, `Encode(const AOriginal: TBytes; const AEdit: TCEASaveEditProposal; out AEncoded: TBytes): TCEAResult`, `Validate(const ABytes: TBytes): TCEAResult`; and `ICEASaveFileEffects.InvokeEffect(const AEffect: TCEAEffect): TCEAResult`. `TCEASaveSnapshot` exposes `ByteCount`, `Sha256`, `ReadCoverage`, `Editable` and a stable file identity. `ReadVerified` returns bytes only to an in-process Codec after rechecking identity/hash; UI/MCP do not receive them.
 
@@ -76,7 +76,7 @@ else
   Require(AContext.ResourceIdentityId = AContext.ProcessIdentityId);
 ```
 
-- [ ] **Step 4: Run GREEN and regression.** Run the new test, `test_agentos_governance.pas`, `test_state_store.pas`, `tools/schema-check/check-schemas.ps1` and `tests/pascal/compile-smoke.ps1`; expected all PASS and no changed behavior for process-bound Effects.
+- [ ] **Step 4: Run GREEN and regression.** Run the new test, `test_governance_services.pas`, `test_state_store.pas`, `tools/schema-check/check-schemas.ps1` and `tests/pascal/compile-smoke.ps1`; expected all PASS and no changed behavior for process-bound Effects.
 
 ### Task 2: 只读快照与未知格式隔离
 
@@ -124,7 +124,7 @@ Assert(HashFile(BackupPath) = Snapshot.Sha256);
 
 - [ ] **Step 2: Run RED.** `./tests/pascal/run-test-program.ps1 -Program ./tests/pascal/test_save_backup.pas`; expected missing backup API.
 - [ ] **Step 3: Implement backup through the file Effect port.** Reserve the destination identity and idempotency key in SQLite before copying; copy from the attested source handle to a create-new destination with write-through/flush; close and reopen the destination to verify hash and length. Record Receipt/Proof; a collided destination with different bytes is conflict, never overwrite. Extend the approval check only for `save_backup` to accept a persisted `policy_auto` decision with explicit scope/expiry/count; existing memory/save-edit approvals remain local-UI only. The test helper `ExtractEffectId` reads the planned Effect ID from JSON.
-- [ ] **Step 4: Run GREEN and fault injection.** Run new test, `test_agentos_governance.pas`, `test_state_store.pas`; after simulated crash inspect the ledger and confirm no duplicate backup write on restart.
+- [ ] **Step 4: Run GREEN and fault injection.** Run new test, `test_governance_services.pas`, `test_state_store.pas`; after simulated crash inspect the ledger and confirm no duplicate backup write on restart.
 
 ### Task 4: 版本化测试 Codec 与字段提议
 
