@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/ce-domain/process.schema.json",
+  "title": "CE process contracts",
+  "$defs": {
+    "processIdentity": {
+      "type": "object",
+      "required": ["id", "pid", "started_at", "executable_path_hash", "executable_sha256", "architecture", "module_set_hash", "epoch"],
+      "properties": {
+        "id": {"type": "string"}, "pid": {"type": "integer", "minimum": 1}, "started_at": {"type": "string", "format": "date-time"},
+        "executable_path_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "executable_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "architecture": {"enum": ["x86", "x86_64", "arm64"]}, "module_set_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "epoch": {"type": "integer", "minimum": 1},
+        "target_classification": {"enum": ["single_player_offline", "multiplayer_or_online", "unknown"]}
+      }, "additionalProperties": false
+    },
+    "moduleIdentity": {
+      "type": "object", "required": ["name", "base_address", "size", "content_hash"],
+      "properties": {"name": {"type": "string"}, "base_address": {"type": "string", "pattern": "^0x[0-9A-Fa-f]+$"}, "size": {"type": "integer", "minimum": 1}, "content_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}},
+      "additionalProperties": false
+    }
+  },
+  "oneOf": [{"$ref": "#/$defs/processIdentity"}, {"$ref": "#/$defs/moduleIdentity"}]
+}

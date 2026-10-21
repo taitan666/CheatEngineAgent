@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/reverse-domain/experiment.schema.json",
+  "title": "Reverse Experiment",
+  "type": "object",
+  "required": ["id", "schema_version", "task_id", "goal", "target", "state", "steps", "created_at", "updated_at"],
+  "properties": {
+    "id": {"$ref": "../common/definitions.schema.json#/$defs/id"},
+    "schema_version": {"$ref": "../common/definitions.schema.json#/$defs/schemaVersion"},
+    "task_id": {"$ref": "../common/definitions.schema.json#/$defs/id"},
+    "goal": {"type": "string", "minLength": 1, "maxLength": 4096},
+    "target": {"$ref": "#/$defs/targetBinding"},
+    "state": {"enum": ["planned", "running", "verifying", "completed", "failed", "cancelled"]},
+    "steps": {"type": "array", "items": {"$ref": "#/$defs/step"}},
+    "created_at": {"$ref": "../common/definitions.schema.json#/$defs/timestamp"},
+    "updated_at": {"$ref": "../common/definitions.schema.json#/$defs/timestamp"}
+  },
+  "$defs": {
+    "targetBinding": {
+      "type": "object", "required": ["process_identity_ref", "epoch"],
+      "properties": {"process_identity_ref": {"$ref": "../common/definitions.schema.json#/$defs/id"}, "epoch": {"$ref": "../common/definitions.schema.json#/$defs/epoch"}},
+      "additionalProperties": false
+    },
+    "step": {
+      "type": "object",
+      "required": ["id", "kind", "capability_id", "preconditions", "acceptance", "budget"],
+      "properties": {
+        "id": {"$ref": "../common/definitions.schema.json#/$defs/id"},
+        "kind": {"enum": ["observe", "scan", "refine", "analyze", "verify", "propose_effect", "save_recipe"]},
+        "capability_id": {"$ref": "../common/definitions.schema.json#/$defs/id"},
+        "preconditions": {"type": "array", "items": {"type": "string"}},
+        "acceptance": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "budget": {"type": "object", "required": ["max_bytes", "max_results", "timeout_ms"], "properties": {"max_bytes": {"type": "integer", "minimum": 0}, "max_results": {"type": "integer", "minimum": 0}, "timeout_ms": {"type": "integer", "minimum": 1}}, "additionalProperties": false}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

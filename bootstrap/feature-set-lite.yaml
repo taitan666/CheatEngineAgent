@@ -1,0 +1,23 @@
+schema_version: "1.0"
+id: cea.features.lite.v1
+runtime_profile: lite
+enabled:
+  - external_writes
+  - durable_work_ledger
+  - execution_hold
+  - ct_rag
+  - real_process_access
+denied:
+  - multi_agent
+  - concurrent_workers
+  - automatic_recovery
+  - learning
+  - model_training
+  - world_model
+  - distributed_replication
+  - anti_cheat_bypass
+  - multiplayer_targeting
+degradation_policy:
+  automatic_recovery: explicit_reconciliation_only
+  vector_search: lexical_search_with_disclosed_limitation
+

@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/llm/model-invocation.schema.json",
+  "title": "ModelInvocation", "type": "object",
+  "required": ["id", "tenant_id", "task_id", "task_contract_version", "policy_snapshot_ref", "lease_ref", "feature_set_ref", "provider_id", "model_id", "adapter_version", "input_hash", "disclosure_manifest_ref", "status"],
+  "properties": {"id": {"type": "string"}, "tenant_id": {"type": "string"}, "task_id": {"type": "string"}, "task_contract_version": {"type": "integer", "minimum": 1}, "policy_snapshot_ref": {"type": "string"}, "lease_ref": {"type": "string"}, "feature_set_ref": {"type": "string"}, "provider_id": {"type": "string"}, "model_id": {"type": "string"}, "adapter_version": {"type": "string"}, "input_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "output_hash": {"type": ["string", "null"], "pattern": "^sha256:[0-9a-f]{64}$"}, "disclosure_manifest_ref": {"type": "string"}, "provider_request_id": {"type": ["string", "null"]}, "input_tokens": {"type": "integer", "minimum": 0}, "output_tokens": {"type": "integer", "minimum": 0}, "cost_minor_units": {"type": "integer", "minimum": 0}, "status": {"enum": ["planned", "executing", "completed", "rejected", "unknown"]}},
+  "additionalProperties": false
+}

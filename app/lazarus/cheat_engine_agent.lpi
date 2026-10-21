@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="12"/>
+    <PathDelim Value="\"/>
+    <General>
+      <Flags>
+        <MainUnitHasCreateFormStatements Value="True"/>
+        <MainUnitHasTitleStatement Value="False"/>
+        <MainUnitHasScaledStatement Value="True"/>
+      </Flags>
+      <SessionStorage Value="InProjectDir"/>
+      <Title Value="CheatEngineAgent"/>
+      <UseAppBundle Value="False"/>
+      <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
+    </General>
+    <BuildModes>
+      <Item Name="Default" Default="True"/>
+    </BuildModes>
+    <RequiredPackages Count="1">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+    </RequiredPackages>
+    <Units>
+      <Unit>
+        <Filename Value="cheat_engine_agent.lpr"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="cea_main_form.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="..\..\dist\CheatEngineAgent"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <OtherUnitFiles Value="..\..\src\app;..\..\src\contracts;..\..\src\core;..\..\src\core\state;..\..\src\core\governance;..\..\src\core\execution;..\..\src\core\reverse;..\..\src\core\save;..\..\src\core\ct-draft;..\..\src\core\command;..\..\src\core\capture;..\..\src\core\profile;..\..\src\domain\ce;..\..\src\domain\reverse;..\..\src\domain\save;..\..\src\domain\state-model;..\..\src\domain\profile;..\..\src\domain\ui-schema;..\..\src\knowledge\ct;..\..\src\llm;..\..\src\platform\ce;..\..\src\platform\windows;..\..\src\platform\save-fixtures;..\..\src\infrastructure;..\..\src\infrastructure\windows;..\..\src\mcp;..\..\src\ui"/>
+      <UnitOutputDirectory Value="..\..\build\lazarus\$(TargetCPU)-$(TargetOS)"/>
+    </SearchPaths>
+    <CodeGeneration>
+      <Optimizations>
+        <OptimizationLevel Value="2"/>
+      </Optimizations>
+    </CodeGeneration>
+    <Linking>
+      <Debugging>
+        <GenerateDebugInfo Value="False"/>
+      </Debugging>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
+    </Linking>
+  </CompilerOptions>
+</CONFIG>

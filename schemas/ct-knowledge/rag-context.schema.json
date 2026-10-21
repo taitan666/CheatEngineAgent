@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/ct-knowledge/rag-context.schema.json",
+  "title": "RagContextManifest", "type": "object",
+  "required": ["id", "task_id", "query_hash", "items", "truncation", "content_hash"],
+  "properties": {"id": {"type": "string"}, "task_id": {"type": "string"}, "query_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "items": {"type": "array", "items": {"type": "object", "required": ["artifact_ref", "content_hash", "compatibility", "evidence_refs"], "properties": {"artifact_ref": {"type": "string"}, "content_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "compatibility": {"enum": ["compatible", "incompatible", "inconclusive"]}, "evidence_refs": {"type": "array", "items": {"type": "string"}}, "excerpt": {"type": "string"}}, "additionalProperties": false}}, "truncation": {"type": "object"}, "content_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}},
+  "additionalProperties": false
+}

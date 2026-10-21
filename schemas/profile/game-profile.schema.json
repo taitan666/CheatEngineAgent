@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/profile/game-profile.schema.json",
+  "title": "Game profile",
+  "description": "某款游戏 + 特定版本对应的字段映射、UI Schema 与验证证据（PRD 6.7 FR-060/FR-061/FR-062）",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile_id",
+    "game_name",
+    "executable_sha256",
+    "connector_type",
+    "fields_json",
+    "created_at"
+  ],
+  "properties": {
+    "profile_id": {"type": "string", "minLength": 1},
+    "game_name": {"type": "string", "minLength": 1},
+    "game_version": {"type": "string"},
+    "executable_sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "module_set_hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "connector_type": {
+      "enum": ["win32_memory", "save_file", "official_api", "mod", "manual"]
+    },
+    "fields_json": {"type": "string", "minLength": 1},
+    "ui_schema_json": {"type": "string"},
+    "evidence_json": {"type": "string"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "updated_at": {"type": "string", "format": "date-time"},
+    "last_verified_at": {"type": "string", "format": "date-time"},
+    "invalidation_reason": {
+      "type": "string",
+      "description": "空字符串表示 Profile 有效；非空表示失效原因（FR-062）"
+    }
+  }
+}

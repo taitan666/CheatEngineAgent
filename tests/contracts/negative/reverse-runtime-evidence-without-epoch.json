@@ -1,0 +1,11 @@
+{
+  "id": "evidence:unbound",
+  "schema_version": "1.0",
+  "scope": "runtime",
+  "kind": "memory_observation",
+  "provenance_uri": "cea://runtime/read/unbound",
+  "content_hash": "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+  "target": {"process_identity_ref": "process:test"},
+  "produced_by_capability": "memory.read",
+  "observed_at": "2026-09-13T00:00:00Z"
+}

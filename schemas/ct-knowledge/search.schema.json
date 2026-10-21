@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/ct-knowledge/search.schema.json",
+  "title": "CT retrieval contracts",
+  "$defs": {
+    "query": {"type": "object", "required": ["text", "process_identity_ref", "max_results"], "properties": {"text": {"type": "string", "minLength": 1}, "process_identity_ref": {"type": ["string", "null"]}, "languages": {"type": "array", "items": {"type": "string"}}, "max_results": {"type": "integer", "minimum": 1, "maximum": 100}}, "additionalProperties": false},
+    "result": {"type": "object", "required": ["artifact_ref", "entry_ref", "compatibility", "lexical_score", "vector_score", "source_score", "evidence_refs"], "properties": {"artifact_ref": {"type": "string"}, "entry_ref": {"type": "string"}, "compatibility": {"enum": ["compatible", "incompatible", "inconclusive"]}, "lexical_score": {"type": "number", "minimum": 0, "maximum": 1}, "vector_score": {"type": ["number", "null"], "minimum": 0, "maximum": 1}, "source_score": {"type": "number", "minimum": 0, "maximum": 1}, "evidence_refs": {"type": "array", "minItems": 1, "items": {"type": "string"}}}, "additionalProperties": false}
+  }, "oneOf": [{"$ref": "#/$defs/query"}, {"$ref": "#/$defs/result"}]
+}

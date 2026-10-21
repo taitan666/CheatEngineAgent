@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/command/write-command.schema.json",
+  "title": "Field write command",
+  "description": "字段级写入命令（PRD 8.5.5）：只接受稳定 field_id 与预期原值，不接受裸地址或裸命令",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "field_id",
+    "value_type",
+    "target_value",
+    "expected_current_value",
+    "address_hex"
+  ],
+  "properties": {
+    "field_id": {"type": "string", "minLength": 1},
+    "value_type": {
+      "enum": ["byte", "word", "dword", "qword", "integer", "single", "double", "bool", "enum", "string"]
+    },
+    "target_value": {"type": "string", "minLength": 1},
+    "expected_current_value": {
+      "type": "string",
+      "minLength": 1,
+      "description": "写入前必须匹配的当前值，用于检测状态冲突（FR-045）"
+    },
+    "profile_id": {
+      "type": "string",
+      "description": "Game Profile 标识；写入必须绑定已验证的 Profile 版本"
+    },
+    "address_hex": {
+      "type": "string",
+      "pattern": "^0x[0-9a-fA-F]+$",
+      "description": "来自已验证字段定义的定位地址，不接受用户直接输入"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/ce-domain/debug.schema.json",
+  "title": "CE debug contracts", "type": "object",
+  "required": ["task_id", "process_identity_ref", "lease_ref", "approval_ref", "operation", "address"],
+  "properties": {"task_id": {"type": "string"}, "process_identity_ref": {"type": "string"}, "lease_ref": {"type": "string"}, "approval_ref": {"type": "string"}, "operation": {"enum": ["set_breakpoint", "remove_breakpoint", "continue", "single_step"]}, "address": {"type": "string", "pattern": "^0x[0-9A-Fa-f]+$"}},
+  "additionalProperties": false
+}

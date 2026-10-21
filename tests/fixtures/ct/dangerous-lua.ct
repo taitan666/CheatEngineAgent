@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>99</ID>
+      <Description>"Static rejection fixture: prohibited process call"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{$lua}
+if syntaxcheck then return end
+createProcess('never-execute-this-fixture.exe')
+{$asm}</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>
+

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/ct-draft/export-result.schema.json",
+  "title": "CT draft export result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["draft_id", "effect_id", "state", "byte_count", "readback_sha256", "receipt_id", "proof_id", "details"],
+  "properties": {
+    "draft_id": {"$ref": "../common/definitions.schema.json#/$defs/id"},
+    "effect_id": {"$ref": "../common/definitions.schema.json#/$defs/id"},
+    "state": {"enum": ["exported", "export_unknown"]},
+    "byte_count": {"type": "integer", "minimum": 0, "maximum": 4194304},
+    "readback_sha256": {"anyOf": [{"const": ""}, {"$ref": "../common/definitions.schema.json#/$defs/sha256"}]},
+    "receipt_id": {"type": "string", "maxLength": 160},
+    "proof_id": {"type": "string", "maxLength": 160},
+    "details": {"type": "object", "additionalProperties": true}
+  }
+}

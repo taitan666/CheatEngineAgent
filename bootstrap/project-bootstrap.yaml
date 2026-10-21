@@ -1,0 +1,64 @@
+schema_version: "1.0"
+id: cea.project.v1
+project_name: CheatEngineAgent
+user_and_actors:
+  - operator
+  - standalone_agent
+primary_goals:
+  - governed_real_process_access
+  - ct_provenance_index_and_rag
+  - auditable_llm_tool_proposals
+non_goals:
+  - multiplayer_targeting
+  - anti_cheat_bypass
+  - kernel_driver_access
+  - model_training
+domain_extensions:
+  - ce_runtime
+  - ct_knowledge
+entities:
+  - ProcessIdentity
+  - CheatTableArtifact
+  - CheatEntry
+  - AobSignature
+capabilities:
+  - process_list
+  - process_attach
+  - memory_scan
+  - memory_read
+  - memory_write
+  - disassemble
+  - script_execute
+  - ct_import
+  - ct_search
+  - rag_context_build
+data_sources:
+  - user_selected_local_ct
+  - gcm_style_catalog
+external_effects:
+  - memory_write
+  - debug_state_change
+  - script_execution
+  - remote_ct_download
+risk_level: high
+required_approvals:
+  - memory_write
+  - debug_state_change
+  - script_execution
+runtime_profile: lite
+harness_adapter: standalone_lazarus_win32
+model_provider: openai_compatible
+persistence_choice: sqlite
+acceptance_tests:
+  - policy_denies_multiplayer
+  - policy_denies_model_training
+  - process_epoch_invalidates_stale_lease
+  - write_requires_readback
+  - ambiguous_aob_stops_execution
+assumptions:
+  - windows_user_mode_first
+  - single_authoritative_executor
+unresolved_questions:
+  - fpc_json_schema_library_validation
+  - fpc_vector_index_library_validation
+  - per_catalog_license_validation

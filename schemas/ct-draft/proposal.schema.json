@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/ct-draft/proposal.schema.json",
+  "title": "Authority-free CT draft proposal",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "recipe_id", "verification_run_id", "game_name", "entries"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "recipe_id": {"$ref": "../common/definitions.schema.json#/$defs/id"},
+    "verification_run_id": {"$ref": "../common/definitions.schema.json#/$defs/id"},
+    "game_name": {"type": "string", "minLength": 1, "maxLength": 256},
+    "game_version": {"type": "string", "maxLength": 128},
+    "entries": {"type": "array", "minItems": 1, "maxItems": 256, "items": {
+      "type": "object", "additionalProperties": false,
+      "required": ["candidate_id", "description", "kind", "value_type", "order", "evidence_ids", "proof_ids"],
+      "properties": {
+        "candidate_id": {"type": "string", "maxLength": 160},
+        "description": {"type": "string", "minLength": 1, "maxLength": 512},
+        "kind": {"enum": ["group", "absolute_address", "module_offset", "pointer_chain"]},
+        "value_type": {"enum": ["none", "byte", "word", "dword", "qword", "single", "double", "byte_array"]},
+        "order": {"type": "integer", "minimum": 0, "maximum": 255},
+        "evidence_ids": {"type": "array", "maxItems": 256, "items": {"$ref": "../common/definitions.schema.json#/$defs/id"}},
+        "proof_ids": {"type": "array", "maxItems": 256, "items": {"$ref": "../common/definitions.schema.json#/$defs/id"}}
+      }
+    }}
+  }
+}

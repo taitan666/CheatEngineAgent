@@ -1,0 +1,10 @@
+{
+  "id": "ct.synthetic.1",
+  "source_ref": "source.fixture",
+  "content_hash": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+  "parser_version": "1.0.0",
+  "provenance": {"uri": "fixture:tests/fixtures/ct/minimal-valid.ct", "acquired_at": "2026-09-12T00:00:00Z", "license_spdx": "LicenseRef-TestFixture", "license_uri": "", "license_status": "allowed"},
+  "game_identity": {"name": "Sample Offline Game", "aliases": ["Synthetic Game"], "store_ids": []},
+  "compatibility": {"architecture": "x86_64", "game_version": null, "modules": ["SampleOfflineGame.exe"], "status": "inconclusive"},
+  "entries": [{"id": "entry.1", "xml_path": "/CheatTable/CheatEntries/CheatEntry[1]", "description": "Synthetic Score", "address_spec": {"kind": "module_offset", "module": "SampleOfflineGame.exe", "offset": "0x10"}, "aob_signatures": [], "scripts": [], "children": []}]
+}

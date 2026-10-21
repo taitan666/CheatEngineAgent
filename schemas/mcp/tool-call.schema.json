@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/mcp/tool-call.schema.json",
+  "title": "MCP tool call parameters",
+  "type": "object",
+  "required": ["name", "arguments"],
+  "properties": {
+    "name": {"type": "string", "minLength": 1},
+    "arguments": {"type": "object"}
+  },
+  "additionalProperties": false
+}

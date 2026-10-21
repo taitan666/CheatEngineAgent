@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"Synthetic Pointer"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>SampleOfflineGame.exe+0020</Address>
+      <Offsets><Offset>10</Offset><Offset>8</Offset></Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"Synthetic AOB"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(SYNTHETIC,SampleOfflineGame.exe,89 83 ?? ?? ?? ??)
+registersymbol(SYNTHETIC)
+[DISABLE]
+unregistersymbol(SYNTHETIC)</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>
+

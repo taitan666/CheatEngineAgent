@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/ce-domain/script-execution.schema.json",
+  "title": "CE script execution request", "type": "object",
+  "required": ["task_id", "process_identity_ref", "lease_ref", "approval_ref", "language", "script_content_hash", "declared_capabilities", "idempotency_key"],
+  "properties": {
+    "task_id": {"type": "string"}, "process_identity_ref": {"type": "string"}, "lease_ref": {"type": "string"}, "approval_ref": {"type": "string"},
+    "language": {"enum": ["autoassembler", "lua"]}, "script_content_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "declared_capabilities": {"type": "array", "uniqueItems": true, "items": {"enum": ["memory_read", "memory_write", "symbol_register", "allocation"]}},
+    "idempotency_key": {"type": "string", "minLength": 1}
+  }, "additionalProperties": false
+}

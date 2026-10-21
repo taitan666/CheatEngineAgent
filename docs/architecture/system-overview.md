@@ -1,0 +1,11 @@
+# System overview
+
+The current authority is the [2026-09-13 Game Reverse Agent rebaseline](../superpowers/specs/2026-09-13-game-reverse-agent-rebaseline.md), amended by [ADR 0005](../decisions/0005-standalone-lazarus-host.md).
+
+CheatEngineAgent is a Windows-first standalone Lazarus/Free Pascal application. The product core is a platform-neutral reverse-experiment layer for plans, hypotheses, evidence, candidates, verification and reusable recipes. AgentOS kernels remain the sole owners of canonical state, authorization, durable execution and completion.
+
+The primary first-stage user surface is its own native Lazarus/Delphi AI workbench. MCP is a secondary loopback control and diagnostic adapter. Win32 process access, CT knowledge, LLM, persistence, UI and future Android support remain replaceable adapters around the shared domain and governance contracts. Upstream Cheat Engine is a reference source, not the application host.
+
+The success path is user goal → bounded Experiment → observations → candidate/hypothesis → RAG evidence → governed Effect when needed → Receipt → Proof → verified Recipe. Failures, inconclusive checks and unknown outcomes are recorded rather than converted to success.
+
+Current implementation is partial: the standalone executable, AgentOS/store/governance foundations, loopback MCP HTTP, real Win32 process access, bounded AOB scanning, minimal disassembly, locally approved compare-write-readback effects, bounded freeze sessions, durable Approval/Receipt/Proof evidence, emergency stop, Credential Manager-backed OpenAI-compatible and Anthropic-compatible calls, and local CT XML-to-SQLite RAG with fuzzy retrieval exist. Freeze sessions bind an exact target/address/value pair, stop on a third value, write-count budget or expiry, and never auto-resume or auto-restore. Model calls apply prompt/RAG/output byte and token budgets before credential access, surface actual provider token usage, do not retry timeout or cancellation, and run outside the UI thread with cancellation and thread-safe SSE delta display. The approved lightweight CT retrieval supports a bounded common-cheat pinyin vocabulary and deterministic token-set ranking, not general neural embeddings. Live third-party-provider interoperability, the complete native AI workbench acceptance and Android host remain incomplete.

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/agentos/effect.schema.json",
+  "title": "Effect",
+  "type": "object",
+  "required": ["id", "schema_version", "task_id", "epoch", "action", "target_ref", "process_identity_ref", "request_hash", "idempotency_key", "lease_ref", "state"],
+  "properties": {
+    "id": {"type": "string"}, "schema_version": {"const": "1.0"}, "task_id": {"type": "string"},
+    "epoch": {"type": "integer", "minimum": 1}, "action": {"type": "string"}, "target_ref": {"type": "string"},
+    "process_identity_ref": {"type": "string"}, "request_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "idempotency_key": {"type": "string", "minLength": 1}, "lease_ref": {"type": "string"},
+    "approval_ref": {"type": ["string", "null"]}, "state": {"enum": ["planned", "executing", "applied", "rejected", "unknown"]},
+    "receipt_refs": {"type": "array", "items": {"type": "string"}}
+  }, "additionalProperties": false
+}

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <!-- CEA provenance draft=ctdraft:fixture:1 recipe=recipe:fixture verification=verification:pass content=sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd -->
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>Player &amp; Stats</Description>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>1</ID>
+          <Description>Health &amp; &quot;Lives&quot;</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>game.exe+1234</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>2</ID>
+          <Description>生命值</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>game.exe+2000</Address>
+          <Offsets>
+            <Offset>10</Offset>
+            <Offset>20</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>Raw &lt;address&gt;</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>1000</Address>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>

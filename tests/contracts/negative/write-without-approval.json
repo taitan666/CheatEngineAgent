@@ -1,0 +1,10 @@
+{
+  "task_id": "task.invalid.write",
+  "process_identity_ref": "process.synthetic.1",
+  "lease_ref": "lease.synthetic.1",
+  "address": "0x1000",
+  "expected_original_bytes": "00000000",
+  "replacement_bytes": "01000000",
+  "idempotency_key": "invalid-no-approval"
+}
+

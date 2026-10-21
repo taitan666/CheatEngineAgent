@@ -1,0 +1,24 @@
+schema_version: "1.0"
+id: cea.application.v1
+project_ref: cea.project.v1
+name: CheatEngineAgent
+runtime_profile: lite
+feature_set_ref: cea.features.lite.v1
+kernels:
+  - state
+  - governance
+  - execution
+extensions:
+  - ce_runtime
+  - ct_knowledge
+adapters:
+  - cheat_engine_7_5
+  - openai_compatible
+  - sqlite
+  - windows_secret_store
+policies:
+  - single_player_only
+  - memory_effects
+  - no_model_training
+acceptance_suite: tests/acceptance/phase-1-scenarios.yaml
+

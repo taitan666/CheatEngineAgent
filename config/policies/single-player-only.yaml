@@ -1,0 +1,15 @@
+schema_version: "1.0"
+id: single_player_only
+priority: 1000
+override_allowed: false
+default_write_decision: deny
+allow_when:
+  - target_classification_is_single_player_offline
+  - operator_attests_authorized_debugging
+deny_when:
+  - target_classification_is_unknown
+  - multiplayer_indicator_present
+  - online_service_indicator_present
+  - anti_cheat_process_or_module_present
+  - concealment_or_bypass_requested
+

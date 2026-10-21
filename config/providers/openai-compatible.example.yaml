@@ -1,0 +1,10 @@
+schema_version: "1.0"
+id: example_openai_compatible
+adapter: openai_compatible
+endpoint: https://api.example.invalid/v1
+model: replace-with-model-id
+secret_ref: windows-credential-manager:CheatEngineAgent/OpenAICompatible
+timeout_ms: 30000
+enabled: false
+automatic_retry: false
+

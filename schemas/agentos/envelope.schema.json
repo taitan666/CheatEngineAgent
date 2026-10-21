@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/agentos/envelope.schema.json",
+  "title": "Envelope",
+  "type": "object",
+  "required": ["id", "type", "schema_version", "tenant_id", "actor_id", "created_at", "payload", "provenance"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1}, "type": {"type": "string", "minLength": 1},
+    "schema_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+    "tenant_id": {"type": "string", "minLength": 1}, "actor_id": {"type": "string", "minLength": 1},
+    "task_id": {"type": ["string", "null"]}, "causation_id": {"type": ["string", "null"]},
+    "correlation_id": {"type": ["string", "null"]}, "created_at": {"type": "string", "format": "date-time"},
+    "payload": {"type": "object"}, "provenance": {"type": "object"}
+  },
+  "additionalProperties": false
+}

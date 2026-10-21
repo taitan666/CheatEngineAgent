@@ -1,0 +1,23 @@
+schema_version: "1.0"
+scenarios:
+  - id: POL-01
+    action: memory_write
+    target_classification: unknown
+    expected: deny
+  - id: POL-02
+    action: memory_write
+    target_classification: multiplayer_or_online
+    expected: deny
+  - id: POL-03
+    action: memory_write
+    target_classification: single_player_offline
+    approval: valid
+    lease: valid
+    expected: allow
+  - id: POL-04
+    action: model_training
+    expected: deny
+  - id: POL-05
+    action: kernel_driver
+    expected: deny
+

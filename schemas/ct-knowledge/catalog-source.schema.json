@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/ct-knowledge/catalog-source.schema.json",
+  "title": "CheatCatalogSource", "type": "object",
+  "required": ["id", "source_kind", "uri", "trust_status", "license_status", "enabled"],
+  "properties": {"id": {"type": "string"}, "source_kind": {"enum": ["local_folder", "gcm_style_json", "user_url"]}, "uri": {"type": "string"}, "trust_status": {"enum": ["unverified", "reviewed", "rejected"]}, "license_spdx": {"type": "string", "minLength": 1, "default": "NOASSERTION"}, "license_uri": {"type": "string"}, "license_status": {"enum": ["unknown", "allowed", "restricted", "denied"]}, "enabled": {"type": "boolean"}, "last_manifest_hash": {"type": ["string", "null"], "pattern": "^sha256:[0-9a-f]{64}$"}},
+  "additionalProperties": false
+}

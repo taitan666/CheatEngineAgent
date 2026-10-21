@@ -1,0 +1,26 @@
+{
+  "name": "cheat-engine-agent",
+  "version": "0.1.0",
+  "description": "Connect Codex to the local Cheat Engine Agent workbench over authenticated MCP.",
+  "author": {
+    "name": "Cheat Engine Agent"
+  },
+  "interface": {
+    "displayName": "Cheat Engine Agent",
+    "shortDescription": "Operate the local single-player game assistant through MCP.",
+    "longDescription": "Connects Codex to a locally running Cheat Engine Agent workbench for controlled save operations, CT knowledge retrieval, and explicitly confirmed read-only process inspection.",
+    "developerName": "Cheat Engine Agent",
+    "category": "DeveloperTools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Check the local game assistant status.",
+      "Search the CT knowledge base for this game.",
+      "Inspect a save only after I confirm its path."
+    ]
+  },
+  "mcpServers": "./.mcp.json"
+}

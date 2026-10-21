@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/mcp/initialize.schema.json",
+  "title": "MCP initialize parameters",
+  "type": "object",
+  "required": ["protocolVersion", "capabilities", "clientInfo"],
+  "properties": {
+    "protocolVersion": {"type": "string", "minLength": 1},
+    "capabilities": {"type": "object"},
+    "clientInfo": {
+      "type": "object",
+      "required": ["name", "version"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

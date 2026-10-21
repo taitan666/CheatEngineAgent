@@ -1,0 +1,10 @@
+{
+  "id": "task.invalid.1",
+  "schema_version": "1.0",
+  "task_contract_ref": {"id": "contract.invalid", "version": 1},
+  "execution_status": "finished",
+  "outcome": null,
+  "epoch": 1,
+  "budget": {}
+}
+

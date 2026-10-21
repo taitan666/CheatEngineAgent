@@ -1,0 +1,18 @@
+schema_version: "1.0"
+id: no_model_training
+priority: 1000
+override_allowed: false
+decision: deny
+capability_ids:
+  - model_training
+  - model_fine_tuning
+  - online_learning
+  - weight_mutation
+  - weight_writeback
+  - training_dataset_export
+allowed_learning_semantics:
+  - provenance_bound_ct_parsing
+  - reversible_indexing
+  - retrieval
+  - rag_context_construction
+

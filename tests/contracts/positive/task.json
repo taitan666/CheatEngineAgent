@@ -1,0 +1,11 @@
+{
+  "id": "task.scaffold.1",
+  "schema_version": "1.0",
+  "task_contract_ref": {"id": "contract.scaffold", "version": 1},
+  "execution_status": "running",
+  "outcome": null,
+  "wait_reason": null,
+  "epoch": 1,
+  "budget": {"tool_calls": 10}
+}
+

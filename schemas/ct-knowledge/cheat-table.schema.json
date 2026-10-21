@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/ct-knowledge/cheat-table.schema.json",
+  "title": "Cheat table knowledge contracts",
+  "$defs": {
+    "addressSpec": {
+      "oneOf": [
+        {"type": "object", "required": ["kind", "address"], "properties": {"kind": {"const": "absolute"}, "address": {"type": "string", "pattern": "^0x[0-9A-Fa-f]+$"}}, "additionalProperties": false},
+        {"type": "object", "required": ["kind", "module", "offset"], "properties": {"kind": {"const": "module_offset"}, "module": {"type": "string"}, "offset": {"type": "string", "pattern": "^0x[0-9A-Fa-f]+$"}}, "additionalProperties": false},
+        {"type": "object", "required": ["kind", "base", "offsets"], "properties": {"kind": {"const": "pointer_chain"}, "base": {"type": "string"}, "offsets": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^0x[0-9A-Fa-f]+$"}}}, "additionalProperties": false}
+      ]
+    },
+    "aobSignature": {"type": "object", "required": ["module", "pattern", "expected_match_count", "validation_status"], "properties": {"module": {"type": "string"}, "pattern": {"type": "string", "pattern": "^([0-9A-Fa-f?]{2})( [0-9A-Fa-f?]{2})+$"}, "expected_match_count": {"type": "integer", "minimum": 1}, "validation_status": {"enum": ["unverified", "pass", "fail", "inconclusive"]}}, "additionalProperties": false},
+    "scriptArtifact": {"type": "object", "required": ["language", "content_hash", "declared_capabilities", "static_analysis"], "properties": {"language": {"enum": ["autoassembler", "lua"]}, "content_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "declared_capabilities": {"type": "array", "items": {"type": "string"}}, "static_analysis": {"enum": ["unverified", "allowed", "denied"]}}, "additionalProperties": false},
+    "entry": {"type": "object", "required": ["id", "xml_path", "description", "children"], "properties": {"id": {"type": "string"}, "xml_path": {"type": "string"}, "description": {"type": "string"}, "address_spec": {"anyOf": [{"$ref": "#/$defs/addressSpec"}, {"type": "null"}]}, "aob_signatures": {"type": "array", "items": {"$ref": "#/$defs/aobSignature"}}, "scripts": {"type": "array", "items": {"$ref": "#/$defs/scriptArtifact"}}, "children": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": false}
+  },
+  "type": "object",
+  "required": ["id", "source_ref", "content_hash", "parser_version", "provenance", "game_identity", "compatibility", "entries"],
+  "properties": {
+    "id": {"type": "string"}, "source_ref": {"type": "string"}, "content_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "parser_version": {"type": "string"},
+    "provenance": {"type": "object", "required": ["uri", "acquired_at", "license_spdx", "license_status"], "properties": {"uri": {"type": "string"}, "acquired_at": {"type": "string", "format": "date-time"}, "license_spdx": {"type": "string", "minLength": 1}, "license_uri": {"type": "string"}, "license_status": {"enum": ["unknown", "allowed", "restricted", "denied"]}}, "additionalProperties": false},
+    "game_identity": {"type": "object", "required": ["name", "aliases"], "properties": {"name": {"type": "string"}, "aliases": {"type": "array", "items": {"type": "string"}}, "store_ids": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": false},
+    "compatibility": {"type": "object", "required": ["architecture", "modules", "status"], "properties": {"architecture": {"type": ["string", "null"]}, "game_version": {"type": ["string", "null"]}, "modules": {"type": "array", "items": {"type": "string"}}, "status": {"enum": ["compatible", "incompatible", "inconclusive"]}}, "additionalProperties": false},
+    "entries": {"type": "array", "items": {"$ref": "#/$defs/entry"}}
+  }, "additionalProperties": false
+}

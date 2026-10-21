@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/ct-draft/entry.schema.json",
+  "title": "Script-free CT draft entry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["ordinal", "parent_ordinal", "kind", "description", "value_type", "address_width_bits", "address", "module_name", "pointer_offsets", "byte_array_length", "candidate_id", "evidence_ids", "verification_outcome", "compatibility_hash", "risk_flags", "aob_evidence"],
+  "properties": {
+    "ordinal": {"type": "integer", "minimum": 0, "maximum": 255},
+    "parent_ordinal": {"type": "integer", "minimum": -1, "maximum": 254},
+    "kind": {"enum": ["group", "absolute_address", "module_offset", "pointer_chain"]},
+    "description": {"type": "string", "minLength": 1, "maxLength": 512},
+    "value_type": {"enum": ["none", "byte", "word", "dword", "qword", "single", "double", "byte_array"]},
+    "address_width_bits": {"enum": [0, 32, 64]},
+    "address": {"type": "string", "maxLength": 32, "pattern": "^(|0x[0-9A-Fa-f]+)$"},
+    "module_name": {"type": "string", "maxLength": 260},
+    "pointer_offsets": {"type": "array", "maxItems": 32, "items": {"type": "string", "maxLength": 32, "pattern": "^0x[0-9A-Fa-f]+$"}},
+    "byte_array_length": {"type": "integer", "minimum": 0, "maximum": 4096},
+    "candidate_id": {"type": "string", "maxLength": 160},
+    "evidence_ids": {"type": "array", "maxItems": 256, "items": {"$ref": "../common/definitions.schema.json#/$defs/id"}},
+    "verification_outcome": {"enum": ["pass"]},
+    "compatibility_hash": {"anyOf": [{"const": ""}, {"$ref": "../common/definitions.schema.json#/$defs/sha256"}]},
+    "risk_flags": {"type": "array", "uniqueItems": true, "items": {"enum": ["non_portable", "version_bound", "aob_evidence_only"]}},
+    "aob_evidence": {"type": "array", "maxItems": 64, "items": {"type": "string", "maxLength": 512}}
+  },
+  "allOf": [
+    {"if": {"properties": {"kind": {"const": "group"}}}, "then": {"properties": {"value_type": {"const": "none"}, "address_width_bits": {"const": 0}, "address": {"const": ""}, "module_name": {"const": ""}, "pointer_offsets": {"maxItems": 0}, "byte_array_length": {"const": 0}, "candidate_id": {"const": ""}, "compatibility_hash": {"const": ""}}}},
+    {"if": {"properties": {"kind": {"const": "absolute_address"}}}, "then": {"properties": {"module_name": {"const": ""}, "pointer_offsets": {"maxItems": 0}, "risk_flags": {"contains": {"const": "non_portable"}}}}},
+    {"if": {"properties": {"kind": {"const": "module_offset"}}}, "then": {"properties": {"module_name": {"minLength": 1}, "pointer_offsets": {"maxItems": 0}}}},
+    {"if": {"properties": {"kind": {"const": "pointer_chain"}}}, "then": {"properties": {"pointer_offsets": {"minItems": 1}}}},
+    {"if": {"properties": {"value_type": {"const": "byte_array"}}}, "then": {"properties": {"byte_array_length": {"minimum": 1}}}, "else": {"properties": {"byte_array_length": {"const": 0}}}}
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/agentos/verification-ledger.schema.json",
+  "title": "VerificationLedger", "type": "object",
+  "required": ["id", "task_id", "records"],
+  "properties": {"id": {"type": "string"}, "task_id": {"type": "string"}, "records": {"type": "array", "items": {"type": "object", "required": ["subject_ref", "verification_kind", "result", "executed_at"], "properties": {"subject_ref": {"type": "string"}, "verification_kind": {"enum": ["static", "focused_runtime", "regression", "build", "deployment", "readback"]}, "result": {"enum": ["pass", "fail", "inconclusive", "not_run"]}, "evidence_refs": {"type": "array", "items": {"type": "string"}}, "executed_at": {"type": "string", "format": "date-time"}}, "additionalProperties": false}}},
+  "additionalProperties": false
+}

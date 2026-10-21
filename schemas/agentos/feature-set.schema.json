@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/agentos/feature-set.schema.json",
+  "title": "FeatureSet",
+  "type": "object",
+  "required": ["id", "version", "runtime_profile", "enabled", "denied"],
+  "properties": {
+    "id": {"type": "string"}, "version": {"type": "integer", "minimum": 1},
+    "runtime_profile": {"enum": ["lite", "standard", "durable"]},
+    "enabled": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "denied": {"type": "array", "uniqueItems": true, "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}

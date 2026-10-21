@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/manifest.json",
+  "title": "CheatEngineAgent schema manifest",
+  "schema_version": "1.0",
+  "hash_format": "sha256:<64 lowercase hexadecimal digits>",
+  "schemas": [
+    "common/definitions.schema.json",
+    "agentos/envelope.schema.json", "agentos/task-contract.schema.json", "agentos/task.schema.json", "agentos/feature-set.schema.json", "agentos/resolved-execution-manifest.schema.json", "agentos/lease.schema.json", "agentos/approval.schema.json", "agentos/effect.schema.json", "agentos/receipt.schema.json", "agentos/proof.schema.json", "agentos/commit-request.schema.json", "agentos/work-ledger.schema.json", "agentos/verification-ledger.schema.json", "agentos/remaining-boundary.schema.json",
+    "ce-domain/process.schema.json", "ce-domain/memory.schema.json", "ce-domain/memory-freeze.schema.json", "ce-domain/scan.schema.json", "ce-domain/debug.schema.json", "ce-domain/script-execution.schema.json",
+    "ct-knowledge/catalog-source.schema.json", "ct-knowledge/cheat-table.schema.json", "ct-knowledge/search.schema.json", "ct-knowledge/rag-context.schema.json",
+    "llm/provider.schema.json", "llm/model-invocation.schema.json", "llm/tool-proposal.schema.json",
+    "mcp/initialize.schema.json", "mcp/tool-call.schema.json", "mcp/tool-result.schema.json",
+    "reverse-domain/experiment.schema.json", "reverse-domain/hypothesis.schema.json", "reverse-domain/evidence.schema.json", "reverse-domain/recipe.schema.json", "reverse-domain/verification.schema.json", "reverse-domain/capability.schema.json",
+    "save-domain/save-target.schema.json", "save-domain/save-snapshot.schema.json", "save-domain/save-edit-proposal.schema.json", "save-domain/save-backup.schema.json", "save-domain/save-format.schema.json", "save-domain/save-field-observation.schema.json", "save-domain/save-edit-receipt.schema.json", "save-domain/save-verification.schema.json", "save-domain/save-recovery.schema.json",
+    "ct-draft/entry.schema.json", "ct-draft/proposal.schema.json", "ct-draft/draft.schema.json", "ct-draft/export-request.schema.json", "ct-draft/export-result.schema.json",
+    "state-model/field.schema.json", "state-model/game-state.schema.json",
+    "ui-schema/component.schema.json", "ui-schema/layout.schema.json",
+    "profile/game-profile.schema.json", "command/write-command.schema.json",
+    "gcm/cheat-table-file.schema.json"
+  ]
+}

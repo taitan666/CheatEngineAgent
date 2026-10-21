@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/ct-draft/draft.schema.json",
+  "title": "Immutable CT draft revision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "revision", "state", "game_name", "target_executable_sha256", "module_set_hash", "compatibility_hash", "recipe_id", "verification_run_id", "evidence_ids", "proof_ids", "source_hashes", "generator_version", "content_hash", "entries", "findings", "failure_modes", "created_at", "updated_at"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "id": {"$ref": "../common/definitions.schema.json#/$defs/id"},
+    "revision": {"type": "integer", "minimum": 1},
+    "parent_draft_id": {"type": "string", "maxLength": 160},
+    "state": {"enum": ["proposed", "validated", "invalidated", "export_planned", "exported", "export_unknown"]},
+    "game_name": {"type": "string", "minLength": 1, "maxLength": 256},
+    "game_version": {"type": "string", "maxLength": 128},
+    "target_executable_sha256": {"$ref": "../common/definitions.schema.json#/$defs/sha256"},
+    "module_set_hash": {"$ref": "../common/definitions.schema.json#/$defs/sha256"},
+    "compatibility_hash": {"$ref": "../common/definitions.schema.json#/$defs/sha256"},
+    "recipe_id": {"$ref": "../common/definitions.schema.json#/$defs/id"},
+    "verification_run_id": {"$ref": "../common/definitions.schema.json#/$defs/id"},
+    "evidence_ids": {"type": "array", "minItems": 1, "maxItems": 256, "items": {"$ref": "../common/definitions.schema.json#/$defs/id"}},
+    "proof_ids": {"type": "array", "minItems": 1, "maxItems": 256, "items": {"$ref": "../common/definitions.schema.json#/$defs/id"}},
+    "source_hashes": {"type": "object", "minProperties": 1, "additionalProperties": {"$ref": "../common/definitions.schema.json#/$defs/sha256"}},
+    "generator_version": {"type": "string", "minLength": 1, "maxLength": 64},
+    "content_hash": {"$ref": "../common/definitions.schema.json#/$defs/sha256"},
+    "entries": {"type": "array", "minItems": 1, "maxItems": 256, "items": {"$ref": "entry.schema.json"}},
+    "findings": {"type": "array", "maxItems": 256, "items": {"type": "object", "additionalProperties": false, "required": ["code", "pointer", "severity"], "properties": {"code": {"type": "string", "minLength": 1, "maxLength": 128}, "pointer": {"type": "string", "maxLength": 512}, "severity": {"enum": ["info", "warning", "error"]}}}},
+    "failure_modes": {"type": "array", "maxItems": 256, "items": {"type": "string", "maxLength": 512}},
+    "created_at": {"$ref": "../common/definitions.schema.json#/$defs/timestamp"},
+    "updated_at": {"$ref": "../common/definitions.schema.json#/$defs/timestamp"}
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/save-domain/save-target.schema.json",
+  "title": "SaveTarget",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "file_identity_id", "offline_attested"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "id": {"type": "string", "minLength": 1},
+    "file_identity_id": {"type": "string", "minLength": 1},
+    "game_label": {"type": "string"},
+    "offline_attested": {"const": true}
+  }
+}

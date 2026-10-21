@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/gcm/cheat-table-file.schema.json",
+  "title": "Cheat table file candidate",
+  "description": "本地发现的 CE 表文件候选（Phase B）：只描述文件来源与完整性，不表示内容已受信任或可执行",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source",
+    "file_path",
+    "file_name",
+    "size_bytes"
+  ],
+  "properties": {
+    "source": {
+      "enum": ["gcm_library", "user_import"],
+      "description": "gcm_library 来自 GCM 已下载目录；user_import 由操作者显式提供路径"
+    },
+    "file_path": {
+      "type": "string",
+      "minLength": 1,
+      "description": "绝对路径；发布时会重新校验其仍位于允许根目录内"
+    },
+    "file_name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "不含目录的显示名，UTF-8"
+    },
+    "game_name": {
+      "type": "string",
+      "description": "来自同级 gcm_info.json 的游戏名，未知时为空串"
+    },
+    "origin": {
+      "type": "string",
+      "description": "来自 gcm_info.json 的来源标记，如 fling_main / the_cheat_script"
+    },
+    "version": {
+      "type": "string",
+      "description": "来自 gcm_info.json 的版本串，缺失时为空串"
+    },
+    "size_bytes": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 16777216,
+      "description": "发现时观测到的字节数，上限 CeaCheatFileMaxBytes = 16 MiB"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "发布时计算的 SHA-256；候选阶段为空"
+    }
+  }
+}

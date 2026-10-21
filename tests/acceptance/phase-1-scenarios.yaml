@@ -1,0 +1,32 @@
+schema_version: "1.0"
+scenarios:
+  - id: CE-01
+    behavior: process_restart_invalidates_epoch_and_lease
+    expected: rejected
+  - id: CE-02
+    behavior: aob_zero_or_multiple_matches_stops_write
+    expected: rejected
+  - id: CE-03
+    behavior: write_readback_mismatch_never_commits_success
+    expected: failed
+  - id: CE-04
+    behavior: bounded_freeze_stops_on_budget_expiry_or_unpermitted_value
+    expected: verified
+  - id: CE-05
+    behavior: freeze_never_auto_resumes_or_auto_restores
+    expected: verified
+  - id: CT-01
+    behavior: damaged_download_is_not_published
+    expected: rejected
+  - id: CT-02
+    behavior: incompatible_ct_is_explanation_only
+    expected: inconclusive
+  - id: LLM-01
+    behavior: provider_timeout_does_not_replay_effect
+    expected: unknown
+  - id: SAFE-01
+    behavior: multiplayer_target_is_not_admitted
+    expected: rejected
+  - id: SAFE-02
+    behavior: model_training_capability_is_not_admitted
+    expected: rejected

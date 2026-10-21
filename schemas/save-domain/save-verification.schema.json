@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/save-domain/save-verification.schema.json",
+  "title": "Save file verification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "effect_id", "receipt_id", "outcome", "observed_sha256"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "effect_id": {"type": "string", "minLength": 1},
+    "receipt_id": {"type": "string", "minLength": 1},
+    "outcome": {"enum": ["pass", "fail", "inconclusive"]},
+    "observed_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  }
+}

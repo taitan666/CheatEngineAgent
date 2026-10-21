@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/agentos/remaining-boundary.schema.json",
+  "title": "RemainingBoundary", "type": "object",
+  "required": ["id", "task_id", "implemented_refs", "unimplemented_refs", "unverified_refs", "environment_limits", "next_actions"],
+  "properties": {"id": {"type": "string"}, "task_id": {"type": "string"}, "implemented_refs": {"type": "array", "items": {"type": "string"}}, "unimplemented_refs": {"type": "array", "items": {"type": "string"}}, "unverified_refs": {"type": "array", "items": {"type": "string"}}, "environment_limits": {"type": "array", "items": {"type": "string"}}, "next_actions": {"type": "array", "items": {"type": "string"}}},
+  "additionalProperties": false
+}

@@ -1,0 +1,11 @@
+{
+  "id": "recipe:health-v1",
+  "schema_version": "1.0",
+  "name": "Verified health location",
+  "compatibility_hash": "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+  "source_evidence_refs": ["evidence:scan-1"],
+  "required_capabilities": ["memory.read"],
+  "location_strategy": {"kind": "aob", "pattern": "48 8B ?? ??"},
+  "verification_plan": {"checks": [{"kind": "read", "expect": "stable"}]},
+  "known_failure_modes": ["game version changed"]
+}

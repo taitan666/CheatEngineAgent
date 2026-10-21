@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/common/definitions.schema.json",
+  "title": "CheatEngineAgent common definitions",
+  "$defs": {
+    "id": {"type": "string", "minLength": 1, "maxLength": 160, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
+    "schemaVersion": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "hexAddress": {"type": "string", "pattern": "^0x[0-9A-Fa-f]+$"},
+    "epoch": {"type": "integer", "minimum": 1},
+    "nonNegative": {"type": "integer", "minimum": 0},
+    "versionRef": {
+      "type": "object",
+      "required": ["id", "version"],
+      "properties": {"id": {"$ref": "#/$defs/id"}, "version": {"type": "integer", "minimum": 1}},
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "id": "recipe:unsafe",
+  "schema_version": "1.0",
+  "name": "Must be rejected",
+  "compatibility_hash": "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+  "source_evidence_refs": ["evidence:1"],
+  "required_capabilities": ["memory.write"],
+  "location_strategy": {},
+  "verification_plan": {"checks": [{}]},
+  "known_failure_modes": [],
+  "approval_ref": "approval:historical"
+}

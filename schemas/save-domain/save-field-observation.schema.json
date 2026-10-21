@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/save-domain/save-field-observation.schema.json",
+  "title": "Save field observation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "snapshot_id", "field_path", "value_json"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "snapshot_id": {"type": "string", "minLength": 1},
+    "field_path": {"type": "string", "pattern": "^/[A-Za-z0-9_-]+$"},
+    "value_json": {"type": "string"}
+  }
+}

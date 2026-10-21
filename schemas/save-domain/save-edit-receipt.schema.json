@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/save-domain/save-edit-receipt.schema.json",
+  "title": "Save edit receipt projection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "snapshot_id", "before_sha256", "after_sha256", "field_path", "receipt_id", "proof_id"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "snapshot_id": {"type": "string", "minLength": 1},
+    "before_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "after_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "field_path": {"type": "string", "pattern": "^/[A-Za-z0-9_-]+$"},
+    "receipt_id": {"type": "string", "minLength": 1},
+    "proof_id": {"type": "string", "minLength": 1}
+  }
+}

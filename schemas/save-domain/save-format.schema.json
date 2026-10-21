@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/save-domain/save-format.schema.json",
+  "title": "Registered save format",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "version", "adapter_hash", "readable", "writable"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "id": {"type": "string", "minLength": 1},
+    "version": {"type": "string", "minLength": 1},
+    "adapter_hash": {"type": "string", "minLength": 1},
+    "readable": {"type": "boolean"},
+    "writable": {"type": "boolean"}
+  }
+}

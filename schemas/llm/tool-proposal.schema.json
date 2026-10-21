@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/llm/tool-proposal.schema.json",
+  "title": "ToolProposal", "type": "object",
+  "required": ["id", "invocation_ref", "tool_id", "arguments", "argument_hash", "evidence_refs", "authority"],
+  "properties": {"id": {"type": "string"}, "invocation_ref": {"type": "string"}, "tool_id": {"type": "string"}, "arguments": {"type": "object"}, "argument_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "evidence_refs": {"type": "array", "items": {"type": "string"}}, "authority": {"const": "none"}},
+  "additionalProperties": false
+}

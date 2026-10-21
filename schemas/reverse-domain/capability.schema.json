@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/reverse-domain/capability.schema.json",
+  "title": "Platform Capability Descriptor",
+  "type": "object",
+  "required": ["id", "schema_version", "platform", "request_schema_id", "result_schema_id", "mutates_external_state"],
+  "properties": {
+    "id": {"$ref": "../common/definitions.schema.json#/$defs/id"},
+    "schema_version": {"$ref": "../common/definitions.schema.json#/$defs/schemaVersion"},
+    "platform": {"enum": ["windows_ce", "android"]},
+    "request_schema_id": {"type": "string", "minLength": 1},
+    "result_schema_id": {"type": "string", "minLength": 1},
+    "mutates_external_state": {"type": "boolean"},
+    "effect_required": {"type": "boolean"}
+  },
+  "allOf": [{"if": {"properties": {"mutates_external_state": {"const": true}}}, "then": {"required": ["effect_required"], "properties": {"effect_required": {"const": true}}}}],
+  "additionalProperties": false
+}

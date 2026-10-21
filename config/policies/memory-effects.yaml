@@ -1,0 +1,36 @@
+schema_version: "1.0"
+id: memory_effects
+default_decision: deny
+rules:
+  - capability: memory_read
+    decision: allow
+    requires_lease: true
+    requires_budget: true
+  - capability: memory_scan
+    decision: allow
+    requires_lease: true
+    requires_budget: true
+  - capability: memory_write
+    decision: allow
+    requires_lease: true
+    requires_approval: true
+    requires_expected_original_bytes: true
+    requires_readback: true
+  - capability: debug_state_change
+    decision: allow
+    requires_lease: true
+    requires_approval: true
+  - capability: script_execution
+    decision: allow
+    requires_lease: true
+    requires_approval: true
+    requires_static_analysis: true
+hard_denies:
+  - kernel_driver
+  - anti_cheat_bypass
+  - concealment
+  - script_network
+  - script_filesystem
+  - script_child_process
+  - script_persistence
+

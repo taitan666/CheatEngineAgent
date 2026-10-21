@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/save-domain/save-recovery.schema.json",
+  "title": "Read-only save RecoveryCase",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "effect_id", "assessment", "owner", "deadline", "next_check", "automatic_retry"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "effect_id": {"type": "string", "minLength": 1},
+    "assessment": {"enum": ["unknown", "observed_not_applied", "observed_applied"]},
+    "observed_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "owner": {"const": "local_user"},
+    "deadline": {"type": "string", "minLength": 1},
+    "next_check": {"type": "string", "minLength": 1},
+    "automatic_retry": {"const": false}
+  }
+}

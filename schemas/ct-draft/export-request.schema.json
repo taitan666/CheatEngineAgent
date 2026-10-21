@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/ct-draft/export-request.schema.json",
+  "title": "Locally governed CT draft export request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["draft_id", "revision_hash", "destination_path", "expected_absent", "max_output_bytes", "expected_sha256"],
+  "properties": {
+    "draft_id": {"$ref": "../common/definitions.schema.json#/$defs/id"},
+    "revision_hash": {"$ref": "../common/definitions.schema.json#/$defs/sha256"},
+    "destination_path": {"type": "string", "minLength": 1, "maxLength": 32767},
+    "expected_absent": {"const": true},
+    "max_output_bytes": {"type": "integer", "minimum": 1, "maximum": 4194304},
+    "expected_sha256": {"$ref": "../common/definitions.schema.json#/$defs/sha256"}
+  }
+}

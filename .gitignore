@@ -1,0 +1,25 @@
+# --- compiler / build artifacts -------------------------------------------------
+build/lazarus/
+*.o
+*.ppu
+*.a
+*.compiled
+*.res
+
+# --- generated outputs -----------------------------------------------------------
+dist/
+output/
+plandump.bin
+*.sqlite3
+*.sqlite3-journal
+*.sqlite3-wal
+*.log
+
+# --- agent / IDE working state ---------------------------------------------------
+.codex/
+.superpowers/
+
+# --- OS ---------------------------------------------------------------------------
+Thumbs.db
+desktop.ini
+.DS_Store

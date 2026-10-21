@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/save-domain/save-backup.schema.json",
+  "title": "Verified SaveBackup",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "backup_id", "snapshot_id", "sha256", "receipt_id", "proof_id", "immutable"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "backup_id": {"type": "string", "minLength": 1},
+    "snapshot_id": {"type": "string", "minLength": 1},
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "receipt_id": {"type": "string", "minLength": 1},
+    "proof_id": {"type": "string", "minLength": 1},
+    "immutable": {"const": true}
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/save-domain/save-edit-proposal.schema.json",
+  "title": "Authority-free SaveEditProposal",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "snapshot_id", "field_path", "expected_json", "new_json", "content_hash", "authority"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "id": {"type": "string", "minLength": 1},
+    "snapshot_id": {"type": "string", "minLength": 1},
+    "field_path": {"type": "string", "pattern": "^/[A-Za-z0-9_-]+$"},
+    "expected_json": {"type": "string"},
+    "new_json": {"type": "string"},
+    "content_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "authority": {"const": "none"}
+  }
+}

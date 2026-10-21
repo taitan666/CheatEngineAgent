@@ -1,0 +1,16 @@
+{
+  "id": "effect.synthetic.write.1",
+  "schema_version": "1.0",
+  "task_id": "task.synthetic.1",
+  "epoch": 1,
+  "action": "memory_write",
+  "target_ref": "address.synthetic.1",
+  "process_identity_ref": "process.synthetic.1",
+  "request_hash": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "idempotency_key": "synthetic-write-1",
+  "lease_ref": "lease.synthetic.1",
+  "approval_ref": "approval.synthetic.1",
+  "state": "planned",
+  "receipt_refs": []
+}
+

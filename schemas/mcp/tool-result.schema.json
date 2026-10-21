@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/mcp/tool-result.schema.json",
+  "title": "MCP tool result envelope",
+  "type": "object",
+  "required": ["stable_code", "is_error", "data"],
+  "properties": {
+    "stable_code": {"type": "string", "minLength": 1},
+    "is_error": {"type": "boolean"},
+    "data": {"type": "object"},
+    "receipt_id": {"type": "string"},
+    "proof_id": {"type": "string"}
+  },
+  "additionalProperties": false
+}

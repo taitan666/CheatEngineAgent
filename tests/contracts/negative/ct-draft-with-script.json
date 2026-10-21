@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "recipe_id": "recipe:health",
+  "verification_run_id": "verification:health",
+  "game_name": "Fixture Game",
+  "entries": [{
+    "candidate_id": "candidate:health",
+    "description": "Health",
+    "kind": "module_offset",
+    "value_type": "dword",
+    "order": 0,
+    "evidence_ids": ["evidence:scan"],
+    "proof_ids": ["proof:health"],
+    "lua_script": "return true"
+  ]
+}

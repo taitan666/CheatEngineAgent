@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/ce-domain/memory-freeze.schema.json",
+  "title": "Bounded memory freeze request",
+  "type": "object",
+  "required": ["task_id", "process_identity_ref", "target_pid", "target_started_at", "target_executable_sha256", "lease_ref", "address", "expected_original_bytes", "replacement_bytes", "interval_ms", "max_writes", "expires_at", "automatic_resume", "automatic_restore"],
+  "properties": {
+    "task_id": {"type": "string", "minLength": 1},
+    "process_identity_ref": {"type": "string", "minLength": 1},
+    "target_pid": {"type": "integer", "minimum": 1},
+    "target_started_at": {"type": "string", "format": "date-time"},
+    "target_executable_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "lease_ref": {"type": "string", "minLength": 1},
+    "address": {"type": "string", "pattern": "^0x[0-9A-Fa-f]+$"},
+    "expected_original_bytes": {"type": "string", "pattern": "^(?:[0-9A-Fa-f]{2}){1,4096}$"},
+    "replacement_bytes": {"type": "string", "pattern": "^(?:[0-9A-Fa-f]{2}){1,4096}$"},
+    "interval_ms": {"type": "integer", "minimum": 100, "maximum": 60000},
+    "max_writes": {"type": "integer", "minimum": 1, "maximum": 10000},
+    "expires_at": {"type": "string", "format": "date-time"},
+    "automatic_resume": {"const": false},
+    "automatic_restore": {"const": false}
+  },
+  "additionalProperties": false
+}

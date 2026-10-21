@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/save-domain/save-snapshot.schema.json",
+  "title": "SaveSnapshot public projection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "target_id", "file_identity_id", "byte_count", "sha256", "read_coverage", "editable"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "id": {"type": "string", "minLength": 1},
+    "target_id": {"type": "string", "minLength": 1},
+    "file_identity_id": {"type": "string", "minLength": 1},
+    "byte_count": {"type": "integer", "minimum": 0, "maximum": 67108864},
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "read_coverage": {"type": "integer", "minimum": 0, "maximum": 67108864},
+    "format_id": {"type": "string"},
+    "editable": {"type": "boolean"}
+  }
+}

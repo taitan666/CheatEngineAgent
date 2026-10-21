@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cheatengineagent.local/reverse-domain/evidence.schema.json",
+  "title": "Reverse Evidence Reference",
+  "type": "object",
+  "required": ["id", "schema_version", "scope", "kind", "provenance_uri", "content_hash", "observed_at"],
+  "properties": {
+    "id": {"$ref": "../common/definitions.schema.json#/$defs/id"},
+    "schema_version": {"$ref": "../common/definitions.schema.json#/$defs/schemaVersion"},
+    "scope": {"enum": ["catalog", "runtime"]},
+    "kind": {"enum": ["ct_artifact", "memory_observation", "scan_snapshot", "disassembly", "verification", "user_statement"]},
+    "provenance_uri": {"type": "string", "minLength": 1},
+    "content_hash": {"$ref": "../common/definitions.schema.json#/$defs/sha256"},
+    "target": {
+      "type": "object", "required": ["process_identity_ref", "epoch"],
+      "properties": {"process_identity_ref": {"$ref": "../common/definitions.schema.json#/$defs/id"}, "epoch": {"$ref": "../common/definitions.schema.json#/$defs/epoch"}},
+      "additionalProperties": false
+    },
+    "produced_by_capability": {"$ref": "../common/definitions.schema.json#/$defs/id"},
+    "observed_at": {"$ref": "../common/definitions.schema.json#/$defs/timestamp"}
+  },
+  "allOf": [{"if": {"properties": {"scope": {"const": "runtime"}}}, "then": {"required": ["target", "produced_by_capability"]}}],
+  "additionalProperties": false
+}
