@@ -3,7 +3,7 @@
 ## Implemented in this delivery
 
 - Approved architecture and decision records.
-- AgentOS/CE/CT-RAG/LLM JSON Schema surface.
+- CE/CT-RAG/LLM JSON Schema surface.
 - Bootstrap, FeatureSet, immutable deny policies, provider example, and harmless fixtures.
 - Pascal ports, kernel shells, adapter shells, composition boundary, and unit manifest.
 - Offline structural checker and acceptance traceability.
