@@ -14,7 +14,7 @@
 
 ## 0. 一句话结论
 
-现有 `cheat-engine-agnet` 已经是一个**独立可运行的内存读写引擎 + 受治理写入闭环 + CT RAG + 存档工作台**，只是它是「面向内部操作者的逆向实验室」，缺少 PRD 的「玩家级产品层」。
+现有 `cheat-engine-agnet` 已经具备**独立运行的游戏进程/内存访问、受治理写入闭环、CT RAG 与存档工作台**等底层基础，但玩家级 Game Companion 体验尚未完整闭合：需要把这些能力整合为语义游戏状态、副屏网页、事件时间线、Game Profile 与自然语言辅助，而不是把产品做成面向逆向工程师的实验室。
 
 改造的本质：**保留治理内核 + win32 引擎作为安全底座，删除 CE 相关技术债，新增「Game State Model → AI 语义映射 → UI Schema → 副屏网页 → Command Bus → 重新读取验证 → Game Profile」这一玩家产品闭环**，并用《Stardew Valley》类独立 RPG 打通首条真实闭环。
 
