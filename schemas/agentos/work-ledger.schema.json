@@ -1,8 +1,0 @@
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.cheatengineagent.local/agentos/work-ledger.schema.json",
-  "title": "WorkLedger", "type": "object",
-  "required": ["id", "tenant_id", "task_id", "task_contract_version", "work_state_version", "source_snapshot_ref", "status_ledger_ref", "verification_ledger_ref", "remaining_boundary_ref", "unsettled_effect_refs", "next_action", "updated_at"],
-  "properties": {"id": {"type": "string"}, "tenant_id": {"type": "string"}, "task_id": {"type": "string"}, "task_contract_version": {"type": "integer", "minimum": 1}, "work_state_version": {"type": "integer", "minimum": 1}, "source_snapshot_ref": {"type": "string"}, "status_ledger_ref": {"type": "string"}, "verification_ledger_ref": {"type": "string"}, "remaining_boundary_ref": {"type": "string"}, "unsettled_effect_refs": {"type": "array", "items": {"type": "string"}}, "next_action": {"type": "string"}, "updated_at": {"type": "string", "format": "date-time"}},
-  "additionalProperties": false
-}
