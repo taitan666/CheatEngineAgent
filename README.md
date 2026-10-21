@@ -29,7 +29,7 @@ The [save discovery plan](docs/superpowers/plans/2026-09-20-save-discovery.md) a
 - `config/`: immutable deny and memory-effect policies.
 - `tests/`: harmless CT fixtures, contract examples, and acceptance scenarios.
 - `docs/`: architecture, decisions, source analysis, verification, and remaining boundaries.
-- `references/upstream/`: isolated, unexecuted upstream source snapshots for architecture research.
+- `vendor/sqlite3/`: the bundled SQLite runtime DLLs (public domain upstream).
 
 Run the local validation with:
 
@@ -57,3 +57,11 @@ The script stores the token in the current Windows user's environment, never in 
 On the native Process page, attach only an authorized offline single-player process. Either enter an explicit address span or explicitly choose a process region set: `private` by default, with `image` and `mapped` opt-in. The planner produces at most 128 sorted, non-overlapping ranges under a 512 MiB total budget; the scanner also enforces 30 seconds, 10,000 candidates, 4,096 regions and 1 MiB per Windows read. Change the observed value in the game and use **按新值复筛** after the state becomes ready; **结束扫描会话** cancels/releases the candidate session. Byte/region truncation and unreadable candidates remain visible as partial coverage and never prove that the value is absent from the process.
 
 The scan runs on a worker, exposes immutable running/ready/partial status, and observes cancellation at bounded scan checkpoints. For a separate MCP-driven scan, the native operator must first authorize the exact read-only range set and budget; MCP cannot create or expand that scope. A real self-process test covers scoped MCP start/refine/status/cancel and refusal of revoked, overlapping, over-budget and stale-Epoch requests. The production scanner has also completed a full 512 MiB run under its 30-second ceiling and a forced 1 ms `time_limit` run. The Codex plugin is installed and its package plus direct HTTP `cea.health` call are verified, but this already-running task cannot acquire a refreshed native tool catalog. A new Codex task after restart, native UI clicking and a fresh real-game acceptance run remain required. See the [Gate 4a plan](docs/superpowers/plans/2026-09-20-live-game-value-scan.md) and [verification report](docs/delivery/verification-report.md) before treating results as game evidence.
+
+## AgentOS conformance
+
+This project targets AgentOS Core contracts (`spec_version 1.18-draft`). Coverage is measured, not assumed: structure level, protocol level and runtime level are tracked and reported separately, and nothing is reported as passing before it has been verified. The measured baseline and the phased plan are in the [AgentOS 1.18-draft conformance transformation plan](docs/agentos-conformance-transformation-plan.md). The project does not currently claim conformance at any of the three levels.
+
+## License
+
+MIT — see [LICENSE](LICENSE). Third-party attribution and the boundary for upstream Cheat Engine / Game Cheats Manager material are recorded in [LICENSE-NOTICE.md](LICENSE-NOTICE.md).
