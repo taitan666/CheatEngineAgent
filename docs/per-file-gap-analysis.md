@@ -110,7 +110,7 @@
 
 ---
 
-## 6. 逆向域（PRD「金手指实验室」的领域基础）
+## 6. 底层候选定位与验证模块（内部目录名 `reverse-domain`）
 
 | 文件 | 现状 | 处置 | 理由 |
 |---|---|---|---|
@@ -123,7 +123,7 @@
 | `src/core/reverse/cea_recipe_service.pas` | 薄壳（40 行） | 🔧 **改造** | publish 门禁正确，但无持久化/版本化。PRD Recipe≈Game Profile 条目，需接 store |
 | `src/core/reverse/cea_ct_evidence_bridge.pas` | 真实（42 行） | ✅ **复用** | CT 工件 → 证据的桥，PRD「CT catalog-evidence 桥接」现成 |
 
-> **关键洞察：** 逆向域的类型层（`cea_reverse_types.pas`）已经非常接近 PRD 的「Game State Model + 证据分级」。差距在于：它表达的是**「地址候选/证据/配方」**，而 PRD 8.4 需要的是**「命名字段 field_id/label/type/value/confidence/access」**。二者是「定位层」与「语义层」的关系，需要在中间新增 `src/domain/state-model/` 把候选映射为语义字段。
+> **关键洞察：** 底层候选定位与验证模块的类型层（`cea_reverse_types.pas`）已经非常接近 PRD 的「Game State Model + 证据分级」。差距在于：它表达的是**「地址候选/证据/配方」**，而 PRD 8.4 需要的是**「命名字段 field_id/label/type/value/confidence/access」**。二者是「定位层」与「语义层」的关系，需要在中间新增 `src/domain/state-model/` 把候选映射为语义字段。
 
 ---
 
@@ -183,7 +183,7 @@
 | `src/infrastructure/cea_schema_validator.pas` | 真实（312 行） | 🔧 **改造** | 手写**子集** JSON Schema 校验器（仅 2 个硬编码正则），非完整 Draft 2020-12。PRD「UI Schema 受控组件」需要更强的 schema 校验，需扩展或换库 |
 | `src/infrastructure/cea_secret_store.pas` | 真实（163 行） | ✅ **复用** | Windows Credential Manager，PRD 隐私要求（密钥不进配置/日志）现成 |
 | `src/infrastructure/cea_ct_xml_exporter.pas` | 真实（133 行） | ✅ **复用** | CT 草稿 → CE XML（含 provenance 注释）。对应 PRD「生成/配置修改脚本」的受控产物 |
-| `src/infrastructure/cea_reverse_repository.pas` | 真实（353 行） | ✅ **复用** | 5 表逆向工件存储（target/candidate/evidence/recipe/verification） |
+| `src/infrastructure/cea_reverse_repository.pas` | 真实（353 行） | ✅ **复用** | 5 表候选定位与验证工件存储（target/candidate/evidence/recipe/verification） |
 | `src/infrastructure/cea_policy_engine.pas` | 薄壳（31 行，委托 policy_model） | ✅ **复用（不必动）** | 「Inert」是设计意图，真逻辑在 policy_model |
 | `src/infrastructure/cea_structured_log.pas` | 空壳（22 行） | ❌ **删除/替换** | `RecordEvent` 返回 `NotImplementedResult`。PRD 6.5 FR-046「操作历史」+ 6.8 时间线需要真实日志，须重写或并入 `cea_event_store` |
 | `src/infrastructure/windows/cea_release_identity.pas` | 真实（169 行） | ✅ **复用** | EXE 哈希 + Authenticode + 安全提示分类 |
