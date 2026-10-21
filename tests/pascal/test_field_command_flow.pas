@@ -70,10 +70,15 @@ begin
       Assert(R.Code = rcOk, 'capture reads a second field');
       Assert(not CaptureResult.Changed,
         'first observation of a different field is not a change');
+      Gems := 43;
+      R := Capture.CaptureField(Field2, CaptureResult);
+      Assert(R.Code = rcOk, 'capture changed second field');
+      Assert(CaptureResult.Changed,
+        'second field detects its own value change');
       R := Capture.CaptureField(Field, CaptureResult);
       Assert(R.Code = rcOk, 'capture returns to the original field');
       Assert(not CaptureResult.Changed,
-        'unchanged original field stays unchanged after field switching');
+        'unchanged original field stays unchanged after another field changes');
 
       // 3. 写入新值 999（对比-写入-读回）
       Command.FieldId := 'player.gold';
