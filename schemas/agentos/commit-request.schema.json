@@ -1,8 +1,0 @@
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.cheatengineagent.local/agentos/commit-request.schema.json",
-  "title": "CommitRequest", "type": "object",
-  "required": ["id", "tenant_id", "aggregate_id", "kind", "expected_base_version", "idempotency_key", "request_hash", "read_set", "delta", "proof_refs"],
-  "properties": {"id": {"type": "string"}, "tenant_id": {"type": "string"}, "aggregate_id": {"type": "string"}, "kind": {"enum": ["ledger", "domain"]}, "expected_base_version": {"type": "integer", "minimum": 0}, "idempotency_key": {"type": "string"}, "request_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "read_set": {"type": "array", "items": {"type": "object"}}, "delta": {"type": "array", "items": {"type": "object", "required": ["operation", "path"], "properties": {"operation": {"enum": ["set", "unset"]}, "path": {"type": "string"}, "value": {}}, "additionalProperties": false}}, "proof_refs": {"type": "array", "items": {"type": "string"}}},
-  "additionalProperties": false
-}
