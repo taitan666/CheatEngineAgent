@@ -443,7 +443,7 @@ var
   Button: TButton;
 begin
   inherited Create(AOwner);
-  Caption := 'CheatEngineAgent';
+  Caption := 'Game Companion Console';
   Width := 1100;
   Height := 720;
   Position := poScreenCenter;

@@ -86,6 +86,6 @@ Android 工作必须等待 Gate 9 且由用户单独确认是否启动，除非�
 
 ## 说明
 
-- 以上内容原分散于 `docs/superpowers/plans/2026-09-13-game-reverse-agent-rebaseline-roadmap.md`、`docs/superpowers/specs/2026-09-19-game-companion-save-architecture.md`、`docs/delivery/verification-report.md`、`docs/superpowers/plans/2026-09-19-format-agnostic-save.md`、`docs/delivery/verification-report.md` 等文件。
+- 以上内容原分散于 `docs/superpowers/plans/2026-09-13-game-companion-roadmap.md`、`docs/superpowers/specs/2026-09-19-game-companion-save-architecture.md`、`docs/delivery/verification-report.md`、`docs/superpowers/plans/2026-09-19-format-agnostic-save.md`、`docs/delivery/verification-report.md` 等文件。
 - 现已统一归档至此，主线文档中相应内容已移除或改写为不引用这些扩展。
 - 这些扩展**均未实现、未独立设计**，不构成当前实现声明，也不阻塞 AI 副屏、金手指、存档、事件录像等基础功能的开发与验收。

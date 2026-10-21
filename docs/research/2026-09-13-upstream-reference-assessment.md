@@ -7,7 +7,7 @@
 
 项目需要重新基线化，但不需要推倒重来。现有 本地治理层 治理、Schema、事件存储、CT RAG 设计、LLM Provider 抽象和 MCP 协议基础继续保留；需要调整的是产品核心与交付顺序。
 
-新的中心应是平台无关的 **Game Reverse Agent Core**，而不是 MCP Server 本身。MCP 作为 Codex/外部客户端的次级控制与测试接口；Windows Cheat Engine 内置聊天与工作台作为第一阶段主要用户入口。Android 是共享同一领域协议的独立宿主，不应把 Kotlin/Rust/C++ 代码塞进 Lazarus 主程序。
+新的中心应是平台无关的 **Game Companion Core**，围绕玩家的游戏状态理解、上下文辅助、副屏、事件时间线、Game Profile 与受控修改组织功能，而不是 MCP Server 本身。MCP 作为 Codex/外部客户端的次级集成与诊断接口；独立 Windows 应用的原生 AI 工作台是第一阶段主要用户入口。Android 是后续可评估的独立宿主，不应把 Kotlin/Rust/C++ 代码塞进 Lazarus 主程序。
 
 ## 上游实现带来的设计证据
 
@@ -24,7 +24,7 @@
 ## 建议目标架构
 
 ```text
-                    Game Reverse Agent Core
+                    Game Companion Core
        +---------------------------------------------+
        | Experiment Planner                          |
        | Recipe Library + CT RAG                     |
@@ -44,7 +44,7 @@
    MCP adapter (secondary external control and diagnostics)
 ```
 
-共享核心不应只表达“读写内存工具”，而应表达完整实验：目标、假设、可控变量、观察、候选地址、稳定性验证、失败原因、证据和可复现配方。平台适配器只负责能力执行与标准化观察。
+底层领域模型不应只表达“读写内存工具”，而应服务于完整的游戏助手闭环：玩家关注的状态字段、采集来源、事件、候选定位、验证、失败原因、证据和可复用 Game Profile。平台适配器只负责能力执行与标准化观察，玩家不需要直接操作内部实验模型。
 
 ## 对现有计划的影响
 
@@ -73,7 +73,7 @@
 ## 推荐的新实施顺序
 
 1. 完成当前 本地治理层 + MCP 最小协议测试，形成可回归的稳定基线。
-2. 定义并测试 Reverse Agent 领域 Schema 与 Pascal 接口。
+2. 定义并测试 游戏状态发现与验证领域 Schema 与 Pascal 接口。
 3. 在 Windows CE 上完成一个端到端实验闭环：扫描、缩小、形成假设、受控写入、读回验证、保存配方。
 4. 接入 CT RAG，让实验规划引用来源和哈希，但不执行导入脚本。
 5. 接入 CE 内置 LLM 工作台，并让它与 MCP 共用同一 Governance Gateway。

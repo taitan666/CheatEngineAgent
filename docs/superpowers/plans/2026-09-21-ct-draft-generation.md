@@ -522,7 +522,7 @@ Run protocol/runtime tests, build the app and execute the live loopback initiali
 - Create: `docs/delivery/ct-draft-manual-acceptance-template.md`
 - Modify: `docs/delivery/verification-report.md`
 - Modify: `docs/delivery/2026-09-20-implementation-progress.md`
-- Modify: `docs/superpowers/plans/2026-09-13-game-reverse-agent-rebaseline-roadmap.md`
+- Modify: `docs/superpowers/plans/2026-09-13-game-companion-roadmap.md`
 - Modify: `README.md`
 
 **Interfaces:**

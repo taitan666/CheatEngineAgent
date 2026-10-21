@@ -1,9 +1,9 @@
-# Game Reverse Agent 重基线实施路线
+# Game Companion 重基线实施路线
 
 日期：2026-09-13  
-状态：已批准  
-产品定位：面向玩家的商业级、Windows 优先、单机离线游戏助手；本地治理服务是受控状态与操作底座，不把应用扩展为未经确认的通用跨领域 Agent 产品。  
-交付顺序：先完成 Windows 核心能力与真实验收；攻略 PDF/OCR、Live2D、语音、Android 等扩展愿景已归档至 [未来扩展](../future-extensions.md)，不阻塞基础功能交付。
+状态：已批准；产品定位于 2026-10-21 复核  
+产品定位：面向玩家的 AI 游戏助手（Game Companion Console），Windows 优先、服务于用户授权的单机离线游戏。主价值是理解游戏状态、提供副屏与上下文辅助，并在受支持的场景中辅助生成和验证修改；内存扫描、候选定位、证据与验证属于底层实现，不是产品身份。  
+交付顺序：先完成 Windows 核心能力与真实验收；攻略 PDF/OCR、Live2D、语音、Android 等扩展愿景已归档至 [未来扩展](../../future-extensions.md)，不阻塞基础功能交付。
 
 ## 当前进度
 
@@ -18,7 +18,7 @@
 - Gate 7（部分完成）：OpenAI-compatible 与 Anthropic-compatible WinHTTP 客户端、Credential Manager 安全录入/读取、Provider UI 选择和 RAG 提议工作台已实现；请求前 prompt/RAG/output 预算、实际 token 总量校验、分块读取取消、UI 工作线程取消以及 timeout/cancel 不重试已实现。两种协议的 SSE 分片解析、Provider 流式请求/归一化和主线程安全增量显示已有自动化与构建证据。真实第三方 Provider（含 `deepseek-flash`）互操作、真实网络流式/取消以及原生工作台人工点击验收仍待完成；不得使用或持久化聊天中暴露过的旧密钥。
 - Gate 8：loopback Streamable HTTP、Bearer、Codex 用户级/项目级配置、可复现插件包、个人市场安装和真实新应用 HTTP `cea.health` 调用已通过。MCP 现注册 27 个工具（补齐 `cea.list_modules`），全部工具使用闭合输入 Schema；服务端在分派前拒绝未知字段、缺失必填项、非法枚举、越界数值、非法地址/十六进制和嵌套范围未知字段。当前任务不会热刷新插件工具目录，重启后新 Codex 任务中的原生工具发现/调用仍待人工确认。
 - 存档扩展（2026-09-20）：格式无关的只读快照、身份/哈希复核、独立备份、`CEA-SAVE-1` 测试 Codec、字段提议、本机审批的编辑/恢复、启动时只读对账及存档工作台/MCP 限权入口已实现并通过自动化测试。未知格式仅只读/备份；真实游戏格式、UI 视觉验收和单机游戏人工实机验收仍待完成。此项不改变 Gate 9 状态。
-- 商业级产品重定位（2026-09-20）：用户确认本应用应按正式面向玩家的软件规划。攻略/设定集 PDF、Live2D 等扩展愿景已归档至 [未来扩展](../future-extensions.md)。引用对话当前无法可靠读取，暂不把其未核实细节写成要求。
+- 商业级产品重定位（2026-09-20）：用户确认本应用应按正式面向玩家的软件规划。攻略/设定集 PDF、Live2D 等扩展愿景已归档至 [未来扩展](../../future-extensions.md)。引用对话当前无法可靠读取，暂不把其未核实细节写成要求。
 - CT 生成演进目标（2026-09-21）：用户要求应用最终能在后台**提出**新 `.CT` 草案。确定性“证据编译器”架构 `docs/superpowers/specs/2026-09-21-ct-draft-generation-design.md` 已获用户批准；对应的 9 任务、48 步 TDD 实施计划位于 `docs/superpowers/plans/2026-09-21-ct-draft-generation.md`，当前等待计划评审确认。尚无生成器或自动导出实现，未经计划确认不进入编码。
 
 ## 全局约束
@@ -33,8 +33,8 @@
 
 ### 文件
 
-- 新增 `docs/decisions/0004-reverse-agent-core-windows-first.md`
-- 新增 `docs/superpowers/specs/2026-09-13-game-reverse-agent-rebaseline.md`
+- 新增 `docs/decisions/0004-game-companion-core-windows-first.md`
+- 新增 `docs/superpowers/specs/2026-09-13-game-companion-rebaseline.md`
 - 新增本路线图
 - 更新 `docs/architecture/system-overview.md`
 - 更新 `docs/plans/README.md`
@@ -61,9 +61,9 @@
 
 ### Gate 1
 
-所有现有测试通过；失败不得带入 Reverse Domain 开发。
+所有现有测试通过；失败不得带入 游戏状态发现与验证域开发。
 
-## 工作包 2：Reverse Domain 契约与 Schema
+## 工作包 2：游戏状态发现与验证契约与 Schema
 
 ### 目标
 
@@ -297,7 +297,7 @@ Codex 实际连接成功；MCP 与内置工作台产生一致的事件、错误�
 
 商业级是每个功能的质量要求，不是“能编译/能演示”就达成。正式公开发布前应建立可追溯的需求→测试→用户入口矩阵，完成受支持 Windows 版本与普通权限环境、安装/升级/卸载、异常恢复、真实游戏样本、性能预算、无障碍与本地化、隐私数据清理、第三方许可证/SBOM、供应链与安全审查、签名及 Defender 告警处置、诊断/支持和回滚验证。具体发布阻断项以 `docs/delivery/windows-release-playbook.md`、`docs/delivery/verification-report.md` 为准；当前未取得商业发布验收，不对外宣称已可正式销售或分发。
 
-> 攻略/OCR、Live2D、语音、Android 等扩展愿景已归档至 [未来扩展](../future-extensions.md)，不属本路线图范围。
+> 攻略/OCR、Live2D、语音、Android 等扩展愿景已归档至 [未来扩展](../../future-extensions.md)，不属本路线图范围。
 
 ## 里程碑与依赖
 
@@ -316,7 +316,7 @@ Gate 1 Foundation green
   -> Commercial release gate
 ```
 
-上图列交付优先级而非全部强制依赖：Gate 4a 是现有 Gate 4 的补强，不需要重新通过已记录的自测试。CT parser 的纯函数实现可在 Gate 2 后与只读能力并行开发，但集成 Gate 6 仍依赖实验与证据契约。MCP 协议基础可以提前稳定，完整工具面必须等待领域服务。攻略/OCR、Live2D、Android 等扩展愿景见 [未来扩展](../future-extensions.md)，不在此里程碑图内。
+上图列交付优先级而非全部强制依赖：Gate 4a 是现有 Gate 4 的补强，不需要重新通过已记录的自测试。CT parser 的纯函数实现可在 Gate 2 后与只读能力并行开发，但集成 Gate 6 仍依赖实验与证据契约。MCP 协议基础可以提前稳定，完整工具面必须等待领域服务。攻略/OCR、Live2D、Android 等扩展愿景见 [未来扩展](../../future-extensions.md)，不在此里程碑图内。
 
 ## 完成报告要求
 

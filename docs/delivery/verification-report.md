@@ -148,7 +148,7 @@ The desktop-control surface could not target the newly built application's visib
 
 ## Current verification — 2026-09-13
 
-**Delivery:** local governance/MCP foundation and Game Reverse Agent architecture rebaseline  
+**Delivery:** local governance/MCP foundation and Game Companion architecture baseline  
 **Compiler:** Free Pascal 3.2.2, `x86_64-win64`
 
 ### Executed checks

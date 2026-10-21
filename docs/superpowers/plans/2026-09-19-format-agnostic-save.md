@@ -201,7 +201,7 @@ Assert(Service.PlanRestore('task-restore', Backup.Id, WrongHash).Code = rcConfli
 ### Task 7: Windows 工作台、MCP 限权与交付核验
 
 **Files:**
-- Modify: `app/lazarus/cea_main_form.pas`, `src/app/cea_application_runtime.pas`, `src/mcp/cea_mcp_registry.pas`, `integration/cheat-engine/ce_agent_mcp_runtime_dispatcher.pas`, `README.md`, `docs/delivery/verification-report.md`, `docs/superpowers/plans/2026-09-13-game-reverse-agent-rebaseline-roadmap.md`
+- Modify: `app/lazarus/cea_main_form.pas`, `src/app/cea_application_runtime.pas`, `src/mcp/cea_mcp_registry.pas`, `integration/cheat-engine/ce_agent_mcp_runtime_dispatcher.pas`, `README.md`, `docs/delivery/verification-report.md`, `docs/superpowers/plans/2026-09-13-game-companion-roadmap.md`
 - Test: `tests/pascal/test_standalone_app_runtime.pas`, `tests/pascal/test_ce_mcp_runtime_dispatcher.pas`, `tests/acceptance/verify-scaffold.ps1`
 
 **Interfaces:** UI actions `选择存档 → 查看快照 → 创建备份 → 查看字段差异 → 本机审批编辑 → 读回结果 → 单独恢复`. MCP adds only `cea.inspect_save`, `cea.get_save_snapshot`, `cea.request_save_backup`, `cea.propose_save_edit`, `cea.get_save_effect`; no approve/execute/restore write tool. If the MCP schema requires capability registration, register denied/unavailable states explicitly rather than exposing inert approval tools.

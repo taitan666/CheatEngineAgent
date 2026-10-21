@@ -1,25 +1,25 @@
-# Game Reverse Agent 架构重基线
+# Game Companion 架构重基线
 
 日期：2026-09-13  
-状态：已批准，当前权威产品架构  
+状态：已批准，当前权威产品架构；产品定位于 2026-10-21 复核  
 取代范围：产品中心、组件职责和实施顺序  
 保留历史：2026-09-12 Cheat Engine Agent 与 MCP 设计仍作为背景和从属设计
 
 ## 1. 产品目标
 
-构建一个独立 Lazarus/Delphi Windows 应用，能够在用户授权的单机离线进程中完成可解释、可审批、可验证、可复现逆向实验。第一阶段交付独立 Windows 宿主；第二阶段以相同领域契约实现独立 Android 宿主。依据 ADR 0005，上游 Cheat Engine 仅作为参考，不是运行宿主。
+构建一个面向玩家的独立 Lazarus/Free Pascal Windows AI 游戏助手，帮助玩家理解当前游戏状态、查看副屏信息、获得上下文辅助，并在受支持的单机离线游戏中安全地发现、提出和验证数值修改。第一阶段交付独立 Windows 宿主；第二阶段再评估共享契约的独立 Android 宿主。产品定位始终是面向玩家的游戏助手；内存扫描、候选定位和验证只是实现部分玩家功能的底层手段。依据 ADR 0005，Cheat Engine 仅作为技术参考，不是运行宿主。
 
 产品成功不以“暴露多少个工具”为标准，而以是否完成以下闭环为标准：
 
 ```text
-用户目标
-  -> 有界实验计划
-  -> 观察与扫描
-  -> 候选与假设
-  -> CT RAG 证据辅助
-  -> 本机审批的最小修改
-  -> 读回与稳定性验证
-  -> 带来源、条件和结果的可复现配方
+玩家需求
+  -> 识别当前游戏与可用数据源
+  -> 有界采集内存、存档、CT 与事件证据
+  -> 映射为带来源/置信度的语义游戏状态
+  -> 副屏展示、上下文解释与事件记录
+  -> 必要时由 AI 提出辅助方案
+  -> 本机审批的可选修改
+  -> 读回验证并沉淀 Game Profile / 可复用条目
 ```
 
 ## 2. 永久边界
@@ -47,7 +47,7 @@ Standalone Windows Lazarus Host (Phase 1)
 +-- LLM Provider Adapter
 +-- CT Catalog / Parser / Retriever
 |
-+-- Game Reverse Agent Core
++-- Game Companion Core
 |   +-- Experiment Planner
 |   +-- Hypothesis and Candidate Manager
 |   +-- Evidence Store
@@ -65,17 +65,17 @@ Android Host (Phase 2, separate application/process)
 `-- frozen shared schemas + conformance scenarios
 ```
 
-依赖方向固定为：Host/UI/Transport → Reverse Agent Core → Governance Ports。平台适配器实现 Port；Reverse Agent Core 不引用 `MainForm`、`TMemScan`、Win32 Handle、JNI、Android Service 或具体模型 SDK。
+依赖方向固定为：Host/UI/Transport → Game Companion Core → Governance Ports。平台适配器实现 Port；Game Companion Core 不引用 `MainForm`、`TMemScan`、Win32 Handle、JNI、Android Service 或具体模型 SDK。
 
-## 4. Game Reverse Agent Core
+## 4. Game Companion Core
 
 ### 4.1 Experiment Planner
 
-把用户目标编译为有界步骤图。每一步包含前置事实、允许的只读能力、最大扫描范围、结果上限、超时、取消条件、预期观察和验收条件。Planner 只产生提议，不产生权限。
+把玩家需求编译为有界的数据采集、状态识别或辅助操作计划。每一步包含前置事实、允许的只读能力、最大扫描范围、结果上限、超时、取消条件、预期观察和验收条件。Planner 只是内部编排组件，只产生提议，不产生权限。
 
 ### 4.2 Hypothesis 与 Candidate
 
-`Hypothesis` 表达某个地址、指针链、AOB 或代码路径为什么可能对应目标游戏状态；`Candidate` 记录具体定位、发现方法、兼容条件和当前置信度。置信度不能替代 Proof，也不能放宽策略。
+`Hypothesis` 与 `Candidate` 是内部状态发现模型：用于判断某个地址、指针链或 AOB 是否对应玩家关心的游戏字段，并记录定位方法、兼容条件和当前置信度。它们不是玩家必须理解的产品概念；置信度不能替代 Proof，也不能放宽策略。
 
 ### 4.3 Evidence Store
 
@@ -83,7 +83,7 @@ Android Host (Phase 2, separate application/process)
 
 ### 4.4 Recipe Library
 
-`Recipe` 是可复现但默认不可执行的实验配方，包含：
+`Recipe` 是底层可复用的辅助方案/修改配方，默认不可执行，包含：
 
 - 游戏与版本兼容条件；
 - 定位策略及备选策略；
@@ -125,11 +125,11 @@ The application-owned governance services are the sole authority for state chang
 - Receipts and verification proofs determine whether a step or experiment completed successfully.
 - The event ledger is authoritative; UI, chat context and LLM context are projections.
 
-## 7. Windows CE 第一阶段
+## 7. Windows 桌面端第一阶段
 
 ### 7.1 必须实现
 
-- 在独立 Lazarus 主程序内组合 本地治理层、Reverse Agent Core、LLM 客户端和原生工作台。
+- 在独立 Lazarus 主程序内组合游戏状态与事件服务、本地治理层、Game Companion Core、LLM 客户端和原生工作台。
 - 真实进程枚举、用户声明、分类、附加与 ProcessIdentity/Epoch。
 - 有界 exact/range/unknown 扫描、refine、状态、取消、读取与反汇编。
 - 单次、内容绑定审批的写入和冻结；执行前原值复核、执行后读回、显式恢复。
@@ -139,11 +139,11 @@ The application-owned governance services are the sole authority for state chang
 
 ### 7.2 主要 UI
 
-原生工作台至少展示：当前目标身份和分类、实验步骤、证据引用、模型提议、扫描进度、候选列表、审批差异、Effect 状态、验证结果和紧急停止。UI 不能保存第二份权威状态。
+原生工作台应优先呈现玩家可理解的游戏概览、语义字段、状态变化、事件时间线、副屏页面、AI 解释与建议；需要诊断底层数据时，再展示采集进度、候选、证据、审批差异和验证结果。UI 不能保存第二份权威状态。
 
 ### 7.3 MCP 定位
 
-MCP 使用独立应用内的 loopback Streamable HTTP 设计，但工具按领域分组，优先提供 `experiment.*`、`evidence.*`、`recipe.*` 和少量 `runtime.*` 工具。底层 Win32 工具仅在确有测试或诊断价值时暴露，并始终经过 Governance Gateway。
+MCP 使用独立应用内的 loopback Streamable HTTP 设计，是次级集成、自动化和诊断接口，不是产品中心。底层可保留 `experiment.*`、`evidence.*`、`recipe.*` 和少量 `runtime.*` 工具，但面向玩家的主流程应围绕游戏状态、助手功能、副屏和 Game Profile 组织；底层 Win32 工具始终经过 Governance Gateway。
 
 ## 8. Android 第二阶段
 
@@ -171,7 +171,7 @@ tests/conformance/
 references/upstream/
 ```
 
-现有 `src/domain/ce` 可在过渡期保留；完成 Port 固化后再机械移动，避免为了目录整洁打断功能实现。
+现有 `src/domain/reverse/` 与 `src/core/reverse/` 是底层候选定位和验证模块的历史内部命名，不代表产品定位；可在后续重构中逐步向 Game State / Companion 语义靠拢。现有 `src/domain/ce` 可在过渡期保留，避免为了目录整洁打断功能实现。
 
 ## 11. 第一阶段验收
 
